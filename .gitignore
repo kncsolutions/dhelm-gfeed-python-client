@@ -1,0 +1,4 @@
+dist/
+DhelmGfeedClient.egg-info/
+build/
+/.idea
