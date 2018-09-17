@@ -47,14 +47,22 @@ class _GfeedClientFactory(WebSocketClientFactory):
         self.on_message = None
         self.on_message_get_exchanges = None
         self.on_message_instruments_on_search = None
+        self.on_message_instruments = None
         self.on_message_last_quote = None
         self.on_message_last_quote_array = None
         self.on_message_snapshot_data = None
+        self.on_message_historical_tick_data = None
+        self.on_message_historical_ohlc_data = None
         self.on_message_instrument_types = None
         self.on_message_product = None
         self.on_message_expiry_dates = None
         self.on_message_option_types = None
         self.on_message_strike_prices = None
+        self.on_message_account_limitations = None
+        self.on_message_market_message = None
+        self.on_message_exchange_message = None
+        self.on_message_realtime_data = None
+        self.on_message_realtime_snapshot_data = None
 
         WebSocketClientFactory.__init__(self, *args, **kwargs)
 
@@ -105,26 +113,42 @@ class GfeedClient(object):
         self.on_message = None
         self.on_message_get_exchanges = None
         self.on_message_instruments_on_search = None
+        self.on_message_instruments = None
         self.on_message_last_quote = None
         self.on_message_last_quote_array = None
         self.on_message_snapshot_data = None
+        self.on_message_historical_tick_data = None
+        self.on_message_historical_ohlc_data = None
         self.on_message_instrument_types = None
         self.on_message_product = None
         self.on_message_expiry_dates = None
         self.on_message_option_types = None
         self.on_message_strike_prices = None
+        self.on_message_account_limitations = None
+        self.on_message_market_message = None
+        self.on_message_exchange_message = None
+        self.on_message_realtime_data = None
+        self.on_message_realtime_snapshot_data = None
 
         # Variables containing response
         self.subscribe_exchanges = Constants.RESULT_NOT_PREPARED
         self.instrument_list_on_search = Constants.RESULT_NOT_PREPARED
+        self.instrument_list = Constants.RESULT_NOT_PREPARED
         self.last_quote = Constants.RESULT_NOT_PREPARED
         self.last_quote_array = Constants.RESULT_NOT_PREPARED
         self.snapshot_data = Constants.RESULT_NOT_PREPARED
+        self.historical_tick_data = Constants.RESULT_NOT_PREPARED
+        self.historical_ohlc_data = Constants.RESULT_NOT_PREPARED
         self.instrument_types = Constants.RESULT_NOT_PREPARED
         self.products = Constants.RESULT_NOT_PREPARED
         self.expiry_dates = Constants.RESULT_NOT_PREPARED
         self.option_types = Constants.RESULT_NOT_PREPARED
         self.strike_prices = Constants.RESULT_NOT_PREPARED
+        self.account_limitations = Constants.RESULT_NOT_PREPARED
+        self.market_message = Constants.RESULT_NOT_PREPARED
+        self.exchange_message = Constants.RESULT_NOT_PREPARED
+        self.realtime_result = Constants.RESULT_NOT_PREPARED
+        self.realtime_snapshot_result = Constants.RESULT_NOT_PREPARED
 
     def connect(self, proxy = None):
         """
@@ -138,14 +162,22 @@ class GfeedClient(object):
         self.factory.on_authenticated = self._on_authenticated
         self.factory.on_message_get_exchanges = self._on_message_get_exchanges
         self.factory.on_message_instruments_on_search = self._on_message_instruments_on_search
+        self.factory.on_message_instruments =  self._on_message_instruments
         self.factory.on_message_last_quote = self._on_message_last_quote
         self.factory.on_message_last_quote_array = self._on_message_last_quote_array
         self.factory.on_message_snapshot_data = self._on_message_snapshot_data
+        self.factory.on_message_historical_tick_data = self._on_message_historical_tick_data
+        self.factory.on_message_historical_ohlc_data = self._on_message_historical_ohlc_data
         self.factory.on_message_instrument_types =self._on_message_instrument_types
         self.factory.on_message_product = self._on_message_product
         self.factory.on_message_expiry_dates = self._on_message_expiry_dates
         self.factory.on_message_option_types = self._on_message_option_types
         self.factory.on_message_strike_prices = self._on_message_strike_prices
+        self.factory.on_message_account_limitations = self._on_message_account_limitations
+        self.factory.on_message_market_message = self._on_message_market_message
+        self.factory.on_message_exchange_message = self._on_message_exchange_message
+        self.factory.on_message_realtime_data = self._on_message_realtime_data
+        self.factory.on_message_realtime_snapshot_data = self._on_message_realtime_snapshot_data
         connectWS(self.factory, timeout=self.connect_timeout)
         reactor.run()
 
@@ -188,18 +220,41 @@ class GfeedClient(object):
             payload = (json.dumps(str_message)).encode('utf8')
             self.base_client.sendMessage(payload, isBinary=False)
 
-    def get_intruments(self):
+    def get_instruments(self, exchange, instrument_type=None, product=None, expiry=None,
+                        option_type=None, strike_price=None):
         """
+        :param exchange : The exchange(required)
+        :param instrument_type : The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
+        :param product :  The product, e.g. NIFTY, BANKNIFTY etc(optional).
+        :param expiry : The expiry date, e.g. 25OCT2018(optional).
+        :param option_type : The option type, e.g. PE,CE(optional).
+        :param strike_price : The strike price(optional).
         """
-    def get_last_quote(self, exchange, intrument_identifier):
+        str_message = {}
+        str_message["MessageType"] = Constants.GET_INSTRUMENTS
+        str_message["Exchange"] = exchange
+        if instrument_type:
+            str_message["InstrumentType"] = instrument_type
+        if product:
+            str_message["Product"] = product
+        if expiry:
+            str_message["Expiry"] = expiry
+        if option_type:
+            str_message["OptionType"] = option_type
+        if strike_price:
+            strike_price["StrikePrice"] = strike_price
+        payload = (json.dumps(str_message)).encode('utf8')
+        self.base_client.sendMessage(payload, isBinary=False)
+
+    def get_last_quote(self, exchange, instrument_identifier):
         """
         :param exchange: The exchange(required)
-        :param intrument_identifier: The instrument identifier(required)
+        :param instrument_identifier: The instrument identifier(required)
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_LAST_QUOTE
         str_message["Exchange"] = exchange
-        str_message["InstrumentIdentifier"] = intrument_identifier
+        str_message["InstrumentIdentifier"] = instrument_identifier
         payload = (json.dumps(str_message)).encode('utf8')
         self.base_client.sendMessage(payload, isBinary=False)
 
@@ -242,15 +297,50 @@ class GfeedClient(object):
         payload = (json.dumps(str_message)).encode('utf8')
         self.base_client.sendMessage(payload, isBinary=False)
 
-    def get_historical_tick_data(self):
+    def get_historical_tick_data(self,  exchange, instrument_identifier,
+                                 max_no=0, from_timestamp=None, to_timestamp=None):
         """
-        :return:
+        :param exchange: The exchange(required)
+        :param instrument_identifier: The instrument identifier(required).
+        :param max_no: Numerical value of maximum records that should be returned(optional).
+        :param from_timestamp: The from time in unix timestamp(optional).
+        :param to_timestamp: The to time in unix timestamp(optional).
         """
+        str_message = {}
+        str_message["MessageType"] = Constants.GET_HISTORY
+        str_message["Exchange"] = exchange
+        str_message["InstrumentIdentifier"] = instrument_identifier
+        if from_timestamp:
+            str_message["From"] = from_timestamp
+        if to_timestamp:
+            str_message["To"] = to_timestamp
+        str_message["Max"] = max_no
+        payload = (json.dumps(str_message)).encode('utf8')
+        self.base_client.sendMessage(payload, isBinary=False)
+        print(str_message)
 
-    def get_historical_ohlc_data(self):
+    def get_historical_ohlc_data(self, exchange, instrument_identifier, periodicity,
+                                 from_timestamp, to_timestamp, max_no=0):
         """
-        :return:
+        :param exchange: The exchange(required)
+        :param instrument_identifier: The instrument identifier(required).
+        :param periodicity : "HOUR"."MINUTE"."DAY","WEEK", or "MONTH"(required).
+        :param from_timestamp: The from time in unix timestamp(required).
+        :param to_timestamp: The to time in unix timestamp(required).
+        :param max_no: Numerical value of maximum records that should be returned(optional).
         """
+        str_message = {}
+        str_message["MessageType"] = Constants.GET_HISTORY
+        str_message["Exchange"] = exchange
+        str_message["InstrumentIdentifier"] = instrument_identifier
+        str_message["Periodicity"] = periodicity
+        str_message["From"] = from_timestamp
+        str_message["To"] = to_timestamp
+        str_message["Max"] = max_no
+        payload = (json.dumps(str_message)).encode('utf8')
+        self.base_client.sendMessage(payload, isBinary=False)
+        print(str_message)
+
     def get_instrument_types(self, exchange):
         """
         :param exchange : The exchange(required)
@@ -331,6 +421,68 @@ class GfeedClient(object):
         payload = (json.dumps(str_message)).encode('utf8')
         self.base_client.sendMessage(payload, isBinary=False)
 
+    def get_limitations(self):
+        """
+        Get account information.
+        """
+        str_message = {}
+        str_message["MessageType"] = Constants.GET_LIMITATIONS
+        payload = (json.dumps(str_message)).encode('utf8')
+        self.base_client.sendMessage(payload, isBinary=False)
+
+    def get_market_message(self, exchange):
+        """
+        :param exchange : The exchange(required)
+        """
+        str_message = {}
+        str_message["MessageType"] = Constants.GET_MARKET_MESSAGE
+        str_message["Exchange"] = exchange
+        payload = (json.dumps(str_message)).encode('utf8')
+        self.base_client.sendMessage(payload, isBinary=False)
+
+    def get_exchange_message(self, exchange):
+        """
+        :param exchange : The exchange(required)
+        """
+        str_message = {}
+        str_message["MessageType"] = Constants.GET_EXCHANGE_MESSAGE
+        str_message["Exchange"] = exchange
+        payload = (json.dumps(str_message)).encode('utf8')
+        self.base_client.sendMessage(payload, isBinary=False)
+
+    def subscribe_realtime(self, exchange, instrument_identifier, unsubscribe=False):
+        """
+        :param exchange: The exchange(required)
+        :param instrument_identifier: The instrument identifier(required)
+        :param unsubscribe: Pass True to unsubscribe(optional)
+        """
+        str_message = {}
+        str_message["MessageType"] = Constants.SUBSCRIBE_REAL_TIME
+        str_message["Exchange"] = exchange
+        str_message["InstrumentIdentifier"] = instrument_identifier
+        if unsubscribe:
+            str_message["Unsubscribe"] = unsubscribe
+        payload = (json.dumps(str_message)).encode('utf8')
+        self.base_client.sendMessage(payload, isBinary=False)
+
+    def subscribe_realtime_snapshot(self, exchange, instrument_identifier, periodicity, unsubscribe=False):
+        """
+        :param exchange: The exchange(required)
+        :param instrument_identifier: The instrument identifier(required)
+        :param periodicity: The periodicity.Valid value is either "MINUTE" or "HOUR"(required).
+        :param unsubscribe: Pass True to unsubscribe(optional)
+        """
+        str_message = {}
+        str_message["MessageType"] = Constants.SUBSCRIBE_SNAPSHOT
+        str_message["Exchange"] = exchange
+        str_message["InstrumentIdentifier"] = instrument_identifier
+        str_message["Periodicity"] = periodicity
+        if unsubscribe:
+            str_message["Unsubscribe"] = unsubscribe
+        payload = (json.dumps(str_message)).encode('utf8')
+        self.base_client.sendMessage(payload, isBinary=False)
+        print(str_message)
+
     def _on_connect(self, base_client, response):
             self.base_client = base_client
             print("Base client assigned")
@@ -352,6 +504,10 @@ class GfeedClient(object):
         if self.on_message_instruments_on_search:
             self.on_message_instruments_on_search(list_instruments)
 
+    def _on_message_instruments(self, list_instruments):
+        if self.on_message_instruments:
+            self.on_message_instruments(list_instruments)
+
     def _on_message_last_quote(self, l_quote):
         if self.on_message_last_quote:
             self.on_message_last_quote(l_quote)
@@ -363,6 +519,14 @@ class GfeedClient(object):
     def _on_message_snapshot_data(self, s_data):
         if self.on_message_snapshot_data:
             self.on_message_snapshot_data(s_data)
+
+    def _on_message_historical_tick_data(self, h_t_d):
+        if self.on_message_historical_tick_data:
+            self.on_message_historical_tick_data(h_t_d)
+
+    def _on_message_historical_ohlc_data(self, h_ohlc_d):
+        if self.on_message_historical_ohlc_data:
+            self.on_message_historical_ohlc_data(h_ohlc_d)
 
     def _on_message_instrument_types(self,i_types):
         if self.on_message_instrument_types:
@@ -384,6 +548,26 @@ class GfeedClient(object):
         if self.on_message_strike_prices:
             self.on_message_strike_prices(s_prices)
 
+    def _on_message_account_limitations(self, a_limit):
+        if self.on_message_account_limitations:
+            self.on_message_account_limitations(a_limit)
+
+    def _on_message_market_message(self, m_m):
+        if self.on_message_market_message:
+            self.on_message_market_message(m_m)
+
+    def _on_message_exchange_message(self, e_m):
+        if self.on_message_exchange_message:
+            self.on_message_exchange_message(e_m)
+
+    def _on_message_realtime_data(self, r_r):
+        if self.on_message_realtime_data:
+            self.on_message_realtime_data(r_r)
+
+    def _on_message_realtime_snapshot_data(self, r_r):
+        if self.on_message_realtime_snapshot_data:
+            self.on_message_realtime_snapshot_data(r_r)
+
     def _on_close(self):
         """on close"""
 
@@ -401,6 +585,9 @@ class GfeedClient(object):
         elif message.find(Constants.MESSAGE_INSTRUMENTS_ON_SEARCH_RESULT) != -1:
             self.instrument_list_on_search = message
             self._on_message_instruments_on_search(json.loads(self.instrument_list_on_search))
+        elif message.find(Constants.MESSAGE_INSTRUMENTS_RESULT) != -1:
+            self.instrument_list = message
+            self._on_message_instruments(json.loads(self.instrument_list))
         elif message.find(Constants.MESSAGE_LAST_QUOTE_RESULT) != -1 and \
                 json.loads(message)['MessageType'] == Constants.MESSAGE_LAST_QUOTE_RESULT:
             self.last_quote = message
@@ -411,6 +598,12 @@ class GfeedClient(object):
         elif message.find(Constants.MESSAGE_SNAPSHOT_RESULT) != -1:
             self.snapshot_data = message
             self._on_message_snapshot_data(json.loads(self.snapshot_data))
+        elif message.find(Constants.MESSAGE_HISTORY_TICK_RESULT) != -1:
+            self.historical_tick_data = message
+            self._on_message_historical_tick_data(json.loads(self.historical_tick_data))
+        elif message.find(Constants.MESSAGE_HISTORY_OHLC_RESULT) != -1:
+            self.historical_ohlc_data = message
+            self._on_message_historical_ohlc_data(json.loads(self.historical_ohlc_data))
         elif message.find(Constants.MESSAGE_INSTRUMENT_TYPES_RESULT) != -1:
             self.instrument_types = message
             self._on_message_instrument_types(json.loads(self.instrument_types))
@@ -426,6 +619,22 @@ class GfeedClient(object):
         elif message.find(Constants.MESSAGE_STRIKE_PRICES_RESULT) != -1:
             self.strike_prices = message
             self._on_message_strike_prices(json.loads(self.strike_prices))
+        elif message.find(Constants.MESSAGE_LIMITATION_RESULT) != -1:
+            self.account_limitations = message
+            self._on_message_account_limitations(json.loads(self.account_limitations))
+        elif message.find(Constants.MESSAGE_MARKET_MESSAGE_RESULT) != -1:
+            self.market_message = message
+            self._on_message_market_message(json.loads(self.market_message))
+        elif message.find(Constants.MESSAGE_EXCHANGE_MESSAGE_RESULT) != -1:
+            self.exchange_message = message
+            self._on_message_exchange_message(json.loads(self.exchange_message))
+        elif message.find(Constants.MESSAGE_REAL_TIME_RESULT) != -1:
+            self.realtime_result = message
+            self._on_message_realtime_data(json.loads(self.realtime_result))
+        elif message.find(Constants.MESSAGE_REAL_TIME_SNAPSHOT_RESULT) != -1:
+            self.realtime_snapshot_result = message
+            self._on_message_realtime_snapshot_data(json.loads(self.realtime_snapshot_result))
+
 
 
 
