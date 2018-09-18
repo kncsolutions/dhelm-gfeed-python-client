@@ -4,6 +4,7 @@ class Constants:
 
     MAX_RETRIES = 30
     MAXDELAY = 5000
+    TIMEOUT = 30
     TICK = "TICK"
     HOUR = "HOUR"
     MINUTE = "MINUTE"

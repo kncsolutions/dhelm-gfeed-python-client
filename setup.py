@@ -14,5 +14,5 @@ setup(
     description='',
     install_requires=[
         "autobahn[twisted]>=18.9.2"
-],
+    ],
 )

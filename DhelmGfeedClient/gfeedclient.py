@@ -1,13 +1,14 @@
 
-import logging
+from twisted.python import log
 from autobahn.twisted.websocket import WebSocketClientProtocol
 from autobahn.twisted.websocket import WebSocketClientFactory,connectWS
 from twisted.internet import reactor
+from twisted.internet.protocol import ReconnectingClientFactory
 from DhelmGfeedClient.constants import Constants
 import json
+import sys
 
 
-log = logging.getLogger(__name__)
 
 
 class _GfeedClientProtocol(WebSocketClientProtocol):
@@ -20,13 +21,12 @@ class _GfeedClientProtocol(WebSocketClientProtocol):
 
     def onConnect(self, response):
         """Called when WebSocket server connection was established"""
-        print("Connected...")
         self.factory.base_client = self
         if self.factory.on_connect:
             self.factory.on_connect(self, response)
+        self.factory.resetDelay()
 
     def onOpen(self):
-        print("opened")
         if self.factory.on_open:
             self.factory.on_open(self)
 
@@ -34,15 +34,26 @@ class _GfeedClientProtocol(WebSocketClientProtocol):
         if self.factory.on_message:
             self.factory.on_message(self, payload, isBinary)
 
+    def onClose(self, wasClean, code, reason):
+        if not wasClean:
+            if self.factory.on_error:
+                self.factory.on_error(self, code, reason)
+        if self.factory.on_close:
+            self.factory.on_close(self, code, reason)
 
-class _GfeedClientFactory(WebSocketClientFactory):
+
+class _GfeedClientFactory(WebSocketClientFactory, ReconnectingClientFactory):
     protocol = _GfeedClientProtocol
+    maxDelay = 10
+    maxRetries = 5
 
     def __init__(self, *args, **kwargs):
         self.base_client = None
         self.on_open = None
+        self.on_error = None
         self.on_close = None
         self.on_connect = None
+        self.on_reconnect = None
         self.on_authenticated = None
         self.on_message = None
         self.on_message_get_exchanges = None
@@ -66,24 +77,22 @@ class _GfeedClientFactory(WebSocketClientFactory):
 
         WebSocketClientFactory.__init__(self, *args, **kwargs)
 
+        def clientConnectionFailed(self, connector, reason):
+            print("Client connection failed .. retrying ..")
+            self.retry(connector)
+
+        def clientConnectionLost(self, connector, reason):
+            print("Client connection lost .. retrying ..")
+            self.retry(connector)
+
 
 
 class GfeedClient(object):
     """
-       The WebSocket client for connecting to Kite Connect's streaming quotes service.
+       The  client to connect to global datafeed websocket data.
     """
-    # Default connection timeout
-    CONNECT_TIMEOUT = 30
-    # Default Reconnect max delay.
-    RECONNECT_MAX_DELAY = 60
-    # Default reconnect attempts
-    RECONNECT_MAX_TRIES = 50
-    # Flag to set if its first connect
-    _is_first_connect = True
-
-    def __init__(self, ws_url, api_key, debug=False,
-                 reconnect=True, reconnect_max_tries=RECONNECT_MAX_TRIES, reconnect_max_delay=RECONNECT_MAX_DELAY,
-                 connect_timeout=CONNECT_TIMEOUT):
+    def __init__(self, ws_url, api_key, debug=False, max_retries=Constants.MAX_RETRIES, max_delay=Constants.MAXDELAY,
+                 connect_timeout=Constants.TIMEOUT):
         """
         :param ws_url: The web socket url.
         :param api_key: Your api  key.
@@ -104,11 +113,17 @@ class GfeedClient(object):
         self.factory = None
         self.base_client = None
         self.connect_timeout = connect_timeout
+        self.is_disconnected_by_user = False
+        self.debug = debug
+        self.max_retries = max_retries
+        self.max_delay = max_delay
 
         # Placeholders for callbacks.
         self.on_open = None
+        self.on_error = None
         self.on_close = None
         self.on_connect = None
+        self.on_reconnect = None
         self.on_authenticated = None
         self.on_message = None
         self.on_message_get_exchanges = None
@@ -150,19 +165,23 @@ class GfeedClient(object):
         self.realtime_result = Constants.RESULT_NOT_PREPARED
         self.realtime_snapshot_result = Constants.RESULT_NOT_PREPARED
 
-    def connect(self, proxy = None):
+    def connect(self):
         """
         Establishes a web socket connection.
         """
-        self.factory = _GfeedClientFactory(self.ws_url, proxy = proxy)
+        if self.debug:
+            log.startLogging(sys.stdout)
+        self.factory = _GfeedClientFactory(self.ws_url)
         self.factory.on_open = self._on_open
+        self.factory.on_error = self._on_error
         self.factory.on_close = self._on_close
         self.factory.on_message = self._on_message
         self.factory.on_connect = self._on_connect
+        self.factory.on_reconnect = self._on_reconnect
         self.factory.on_authenticated = self._on_authenticated
         self.factory.on_message_get_exchanges = self._on_message_get_exchanges
         self.factory.on_message_instruments_on_search = self._on_message_instruments_on_search
-        self.factory.on_message_instruments =  self._on_message_instruments
+        self.factory.on_message_instruments = self._on_message_instruments
         self.factory.on_message_last_quote = self._on_message_last_quote
         self.factory.on_message_last_quote_array = self._on_message_last_quote_array
         self.factory.on_message_snapshot_data = self._on_message_snapshot_data
@@ -178,8 +197,23 @@ class GfeedClient(object):
         self.factory.on_message_exchange_message = self._on_message_exchange_message
         self.factory.on_message_realtime_data = self._on_message_realtime_data
         self.factory.on_message_realtime_snapshot_data = self._on_message_realtime_snapshot_data
+        if self.max_retries > 0:
+            self.factory.maxRetries = self.max_retries
+        if self.max_delay > 0:
+            self.factory.maxDelay = self.max_delay
+
         connectWS(self.factory, timeout=self.connect_timeout)
-        reactor.run()
+
+        if not reactor.running:
+            reactor.run()
+
+    def disconnect(self, code=None, reason=None):
+        """Close the WebSocket connection."""
+        self.is_disconnected_by_user = True
+        if self.factory:
+            self.factory.stopTrying()
+        if self.base_client:
+            self.base_client.sendClose(code, reason)
 
     def is_connected(self):
         """Check if WebSocket connection is established."""
@@ -492,6 +526,18 @@ class GfeedClient(object):
     def _on_open(self, base_client):
         self._authenticate(base_client)
 
+    def _on_close(self, base_client, code, reason):
+        if self.on_close:
+            self.on_close(self, code, reason)
+
+    def _on_error(self, base_client, code, reason):
+        if self.on_error:
+            self.on_error(self, code, reason)
+
+    def _on_reconnect(self, attempts_count):
+        if self.on_reconnect:
+            return self.on_reconnect(self, attempts_count)
+
     def _on_authenticated(self):
         if self.on_authenticated:
             self.on_authenticated(self)
@@ -567,9 +613,6 @@ class GfeedClient(object):
     def _on_message_realtime_snapshot_data(self, r_r):
         if self.on_message_realtime_snapshot_data:
             self.on_message_realtime_snapshot_data(r_r)
-
-    def _on_close(self):
-        """on close"""
 
     def _on_message(self,base_client, payload, isBinary):
         """on message"""
