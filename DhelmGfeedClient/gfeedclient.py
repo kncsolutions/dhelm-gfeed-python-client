@@ -89,7 +89,7 @@ class _GfeedClientFactory(WebSocketClientFactory, ReconnectingClientFactory):
 
 class GfeedClient(object):
     """
-       The  client to connect to global datafeed websocket data.
+       The  client to connect to Global datafeed websocket data.
     """
     def __init__(self, ws_url, api_key, debug=False, max_retries=Constants.MAX_RETRIES, max_delay=Constants.MAXDELAY,
                  connect_timeout=Constants.TIMEOUT):
@@ -168,6 +168,8 @@ class GfeedClient(object):
     def connect(self):
         """
         Establishes a web socket connection.
+        On successful authentication ``on_authenticated(base_client)`` callback is fired.
+        The ``base_client`` is the currently initialised WebSocket object.
         """
         if self.debug:
             log.startLogging(sys.stdout)
@@ -229,6 +231,9 @@ class GfeedClient(object):
         base_client.sendMessage(payload, isBinary=False)
 
     def get_exchanges(self):
+        """
+        Call this method to get the list of subscribed exchanges.
+        """
         if self.is_authenticated:
             str_message = '{"MessageType":\"'+Constants.GET_EXCHANGES+'\"}'
             print(str_message)
@@ -243,7 +248,7 @@ class GfeedClient(object):
     def get_instruments_on_search(self, exchange, key_word):
         """
         :param exchange: The exchange(required)
-        :param key_word:The search word(required).
+        :param key_word: The search word(required).
         :return:
         """
         if self.is_authenticated:
@@ -257,12 +262,12 @@ class GfeedClient(object):
     def get_instruments(self, exchange, instrument_type=None, product=None, expiry=None,
                         option_type=None, strike_price=None):
         """
-        :param exchange : The exchange(required)
-        :param instrument_type : The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
-        :param product :  The product, e.g. NIFTY, BANKNIFTY etc(optional).
-        :param expiry : The expiry date, e.g. 25OCT2018(optional).
-        :param option_type : The option type, e.g. PE,CE(optional).
-        :param strike_price : The strike price(optional).
+        :param exchange: The exchange(required)
+        :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
+        :param product:  The product, e.g. NIFTY, BANKNIFTY etc(optional).
+        :param expiry: The expiry date, e.g. 25OCT2018(optional).
+        :param option_type: The option type, e.g. PE,CE(optional).
+        :param strike_price: The strike price(optional).
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_INSTRUMENTS
@@ -314,8 +319,8 @@ class GfeedClient(object):
         """
         :param exchange: The exchange(required)
         :param instrument_identifiers: The instrument identifiers(required)
-        :param periodicity : The periodicity/"HOUR" or "MINUTE"(optional).
-        :param period : The period.E.g. 1,2,3 etc.(optional).
+        :param periodicity: The periodicity/"HOUR" or "MINUTE"(optional).
+        :param period: The period.E.g. 1,2,3 etc.(optional).
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_SNAPSHOT
@@ -358,7 +363,7 @@ class GfeedClient(object):
         """
         :param exchange: The exchange(required)
         :param instrument_identifier: The instrument identifier(required).
-        :param periodicity : "HOUR"."MINUTE"."DAY","WEEK", or "MONTH"(required).
+        :param periodicity: "HOUR"."MINUTE"."DAY","WEEK", or "MONTH"(required).
         :param from_timestamp: The from time in unix timestamp(required).
         :param to_timestamp: The to time in unix timestamp(required).
         :param max_no: Numerical value of maximum records that should be returned(optional).
@@ -377,7 +382,7 @@ class GfeedClient(object):
 
     def get_instrument_types(self, exchange):
         """
-        :param exchange : The exchange(required)
+        :param exchange: The exchange(required)
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_INSTRUMENT_TYPES
@@ -387,8 +392,8 @@ class GfeedClient(object):
 
     def get_products(self, exchange, instrument_type=None):
         """
-        :param exchange : The exchange(required)
-        :param instrument_type : The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
+        :param exchange: The exchange(required)
+        :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_PRODUCTS
@@ -400,9 +405,9 @@ class GfeedClient(object):
 
     def get_expiry_dates(self, exchange, instrument_type=None, product=None):
         """
-        :param exchange : The exchange(required)
-        :param instrument_type : The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
-        :param product :  The product, e.g. NIFTY,BANKNIFTY etc(optional).
+        :param exchange: The exchange(required)
+        :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
+        :param product:  The product, e.g. NIFTY,BANKNIFTY etc(optional).
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_EXPIRY_DATES
@@ -416,10 +421,10 @@ class GfeedClient(object):
 
     def get_option_types(self, exchange, instrument_type=None, product=None , expiry=None):
         """
-        :param exchange : The exchange(required)
-        :param instrument_type : The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
-        :param product :  The product, e.g. NIFTY, BANKNIFTY etc(optional).
-        :param expiry : The expiry date, e.g. 25OCT2018(optional).
+        :param exchange: The exchange(required)
+        :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
+        :param product:  The product, e.g. NIFTY, BANKNIFTY etc(optional).
+        :param expiry: The expiry date, e.g. 25OCT2018(optional).
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_OPTION_TYPES
@@ -435,11 +440,11 @@ class GfeedClient(object):
 
     def get_strike_prices(self, exchange, instrument_type=None, product=None, expiry=None, option_type=None):
         """
-        :param exchange : The exchange(required)
-        :param instrument_type : The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
-        :param product :  The product, e.g. NIFTY, BANKNIFTY etc(optional).
-        :param expiry : The expiry date, e.g. 25OCT2018(optional).
-        :param option_type : The option type, e.g. PE,CE(optional).
+        :param exchange: The exchange(required)
+        :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
+        :param product:  The product, e.g. NIFTY, BANKNIFTY etc(optional).
+        :param expiry: The expiry date, e.g. 25OCT2018(optional).
+        :param option_type: The option type, e.g. PE,CE(optional).
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_STRIKE_PRICES
@@ -466,7 +471,7 @@ class GfeedClient(object):
 
     def get_market_message(self, exchange):
         """
-        :param exchange : The exchange(required)
+        :param exchange: The exchange(required)
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_MARKET_MESSAGE
@@ -476,7 +481,7 @@ class GfeedClient(object):
 
     def get_exchange_message(self, exchange):
         """
-        :param exchange : The exchange(required)
+        :param exchange: The exchange(required)
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_EXCHANGE_MESSAGE

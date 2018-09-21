@@ -1,0 +1,391 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Dhelm-gfeed-python-client’s documentation! &#8212; DhelmGfeedClient 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dhelm-gfeed-python-client-s-documentation">
+<h1>Dhelm-gfeed-python-client’s documentation!<a class="headerlink" href="#dhelm-gfeed-python-client-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Dhelm-gfeed-python-client is a python client library to access and integrate stock market data from <a class="reference external" href="https://globaldatafeeds.in/">Global Financial Datafeeds LLP</a> with your  application.To use this library you must subscribe to web socket api with Global Financial Datafeeds LLP and get your API key and web socket endpoint URL.
+Programmatic access to data  provides better and unique control over your algorithm. You access the raw data from your data provider, then feed into your own application and do whatever analysis you want in a unique way.</p>
+<p>For detailed integration and usage guidelines, please read through the pages.</p>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>The client is tested with python 3.4+.</p>
+<div class="section" id="install-from-sources">
+<h2>Install from Sources<a class="headerlink" href="#install-from-sources" title="Permalink to this headline">¶</a></h2>
+<p>To install</p>
+</div>
+</div>
+<div class="section" id="methods-and-callbacks">
+<h1>Methods and Callbacks<a class="headerlink" href="#methods-and-callbacks" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="initialization">
+<h2>Initialization:<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h2>
+<p>Initialize the client in the following way.</p>
+</div>
+<div class="section" id="members">
+<h2>Members:<a class="headerlink" href="#members" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">connect()</span></code> : Call this method to connect to the web socket.</li>
+</ol>
+<p>On successful authentication <code class="docutils literal notranslate"><span class="pre">on_authenticated(base_client)</span></code> callback is fired.
+The <code class="docutils literal notranslate"><span class="pre">base_client</span></code> is the currently initialised WebSocket object.</p>
+<ol class="arabic simple" start="2">
+<li><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">get_exchanges()</span></code> : Call this method to get the list of subscribed exchanges.</li>
+</ol>
+<blockquote>
+<div><dl class="docutils">
+<dt>On successful execution <code class="docutils literal notranslate"><span class="pre">on_message_get_exchanges(list_exchanges)</span></code> callback is fired.</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">list_exchanges</span></code> : The list of subscribed exchanges.</dd>
+</dl>
+</div></blockquote>
+<p>Sample Response:</p>
+<blockquote>
+<div><div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+ &quot;Result&quot;:[
+ {&quot;Value&quot;:&quot;MCX&quot;},
+ {&quot;Value&quot;:&quot;NFO&quot;},
+ {&quot;Value&quot;:&quot;NSE&quot;}],
+ &quot;MessageType&quot;:&quot;ExchangesResult&quot;
+ s}
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="example-usage">
+<h1>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">DhelmGfeedClient.gfeedclient</span> <span class="kn">import</span> <span class="n">GfeedClient</span>
+<span class="kn">from</span> <span class="nn">DhelmGfeedClient.constants</span> <span class="kn">import</span> <span class="n">Constants</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c1">#&lt;ws_url&gt; : Replace &lt;ws_url&gt; with the web socket url</span>
+<span class="c1">#&lt;api_key&gt; : Replace &lt;api_key&gt; with your api key which you have got on subscription.</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">GfeedClient</span><span class="p">(</span><span class="s2">&quot;&lt;ws_url&gt;&quot;</span><span class="p">,</span><span class="s2">&quot;&lt;api_key&gt;&quot;</span><span class="p">)</span>
+
+<span class="c1">#Sample implementation of callback on successful authentication. Inside this method you have to call the relevant method to</span>
+<span class="c1">#retrive data from web socket.</span>
+<span class="k">def</span> <span class="nf">on_authenticated</span><span class="p">(</span><span class="n">base_client</span><span class="p">):</span>
+   <span class="c1">#Retrieve the list of subscribed exchanges. On successful data retrieval the callback `on_message_get_exchanges`(in this sample example)</span>
+   <span class="c1">#will be called.</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_exchanges</span><span class="p">()</span>
+   <span class="c1">#Retrieve the list of instruments using search key &quot;SBIN&quot; from exchange &quot;NSE&quot;.</span>
+   <span class="c1">#Respective callback in example : on_message_instruments_on_search</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_instruments_on_search</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span> <span class="s2">&quot;SBIN&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the list of all instruments from exchange &quot;NSE&quot;.</span>
+   <span class="c1">#Respective callback in example : on_message_instruments</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_instruments</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the last quote of &quot;SBIN&quot; from exchange &quot;NSE&quot;.</span>
+   <span class="c1">#Respective callback in example : on_message_last_quote_array</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_last_quote</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span> <span class="s2">&quot;SBIN&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the last quotes of &quot;SBIN&quot;,&quot;BEPL&quot; and &quot;INFY&quot; in one call from exchange &quot;NSE&quot;.</span>
+   <span class="c1">#Respective callback in example : on_message_last_quote_array</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_last_quotes_array</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;SBIN&quot;</span><span class="p">,</span> <span class="s2">&quot;BEPL&quot;</span><span class="p">,</span> <span class="s2">&quot;INFY&quot;</span><span class="p">])</span>
+   <span class="c1">#Retrieve the snapshot quote of &quot;SBIN&quot;, &quot;BEPL&quot; and &quot;INFY&quot; from exchange &quot;NSE&quot;.</span>
+   <span class="c1">#Respective callback in example :  on_message_snapshot_data</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_snapshot</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;SBIN&quot;</span><span class="p">,</span> <span class="s2">&quot;BEPL&quot;</span><span class="p">,</span> <span class="s2">&quot;INFY&quot;</span><span class="p">])</span>
+   <span class="c1">#Retrieve the types of instruments available from exchange &quot;NFO&quot;.</span>
+   <span class="c1">#Respective callback in example : on_message_instrument_types</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_instrument_types</span><span class="p">(</span><span class="s2">&quot;NFO&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the type of products of  from exchange &quot;NFO&quot; where instrument type is &quot;FUTIDX&quot;.</span>
+   <span class="c1">#Respective callback in example : on_message_products</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_products</span><span class="p">(</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span> <span class="s2">&quot;FUTIDX&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the expiry dates of contracts  from exchange &quot;NFO&quot; where instrument type is &quot;FUTIDX&quot; and product is &quot;NIFTY&quot;.</span>
+   <span class="c1">#Respective callback in example : on_message_expiry_dates</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_expiry_dates</span><span class="p">(</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span> <span class="s2">&quot;FUTIDX&quot;</span><span class="p">,</span> <span class="s2">&quot;NIFTY&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the option types from exchange &quot;NFO&quot; where instrument type is &quot;FUTIDX&quot;, product is &quot;NIFTY&quot; and expiry date is &quot;25OCT2018&quot;.</span>
+   <span class="c1">#Respective callback in example : on_message_option_types</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_option_types</span><span class="p">(</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span> <span class="s2">&quot;FUTIDX&quot;</span><span class="p">,</span> <span class="s2">&quot;NIFTY&quot;</span><span class="p">,</span> <span class="s2">&quot;25OCT2018&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the strike prices from exchange &quot;NFO&quot; where instrument type is &quot;FUTIDX&quot;, product is &quot;NIFTY&quot; and expiry date is &quot;25OCT2018&quot;</span>
+   <span class="c1">#Respective callback in example : on_message_strike_prices</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_strike_prices</span><span class="p">(</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span> <span class="s2">&quot;FUTIDX&quot;</span><span class="p">,</span> <span class="s2">&quot;NIFTY&quot;</span><span class="p">,</span> <span class="s2">&quot;25OCT2018&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve your account details and limitations.</span>
+   <span class="c1">#Respective callback in example : on_message_account_limitations</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_limitations</span><span class="p">()</span>
+   <span class="c1">#Retrieve the market message for exchange &quot;NSE&quot;</span>
+   <span class="c1">#Respective callback in example : on_message_market_message</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_market_message</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the exchange message for exchange &quot;NSE&quot;</span>
+   <span class="c1">#Respective callback in example : on_message_exchange_message</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_exchange_message</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the real time data for &quot;SBIN&quot; for exchange &quot;NSE&quot;</span>
+   <span class="c1">#Respective callback in example : on_message_realtime_data</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">subscribe_realtime</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span> <span class="s2">&quot;SBIN&quot;</span><span class="p">)</span>
+   <span class="c1">#Retrieve the real  time snapshot data for &quot;SBIN&quot; for exchange &quot;NSE&quot;</span>
+   <span class="c1">#Respective callback in example : on_message_realtime_snapshot_data</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">subscribe_realtime_snapshot</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span> <span class="s2">&quot;SBIN&quot;</span><span class="p">,</span> <span class="n">Constants</span><span class="o">.</span><span class="n">MINUTE</span><span class="p">)</span>
+   <span class="c1">#Retrieve the last 10 historical tick data for &quot;SBIN&quot; for exchange &quot;NSE&quot;</span>
+   <span class="c1">#Respective callback in example : on_message_historical_tick_data</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_historical_tick_data</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span> <span class="s2">&quot;SBIN&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+   <span class="c1">#Retrieve the historical ohlc data for &quot;SBIN&quot; for exchange &quot;NSE&quot; from 13th September 2018 until now.</span>
+   <span class="c1">#Respective callback in example : on_message_historical_ohlc_data</span>
+   <span class="n">base_client</span><span class="o">.</span><span class="n">get_historical_ohlc_data</span><span class="p">(</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span> <span class="s2">&quot;SBIN&quot;</span><span class="p">,</span> <span class="n">Constants</span><span class="o">.</span><span class="n">HOUR</span><span class="p">,</span>
+                               <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
+                               <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span> <span class="mi">10</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_get_exchanges</span><span class="p">(</span><span class="n">list_exchanages</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LIST OF EXCHANGES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="n">response</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">list_exchanages</span><span class="p">))</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Result&#39;</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_instruments_on_search</span><span class="p">(</span><span class="n">list_instruments</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LIST OF INSTRUMENTS*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">list_instruments</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_instruments</span><span class="p">(</span><span class="n">list_instruments</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LIST OF INSTRUMENTS*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">list_instruments</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_last_quote</span><span class="p">(</span><span class="n">last_quote</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LAST QUOTE*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">last_quote</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_last_quote_array</span><span class="p">(</span><span class="n">last_quote_array</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LAST QUOTE ARRAY*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">last_quote_array</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_snapshot_data</span><span class="p">(</span><span class="n">snapshot_data</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********SNAPSHOT DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">snapshot_data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_instrument_types</span><span class="p">(</span><span class="n">instrument_types</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********INSTRUMENT TYPES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">instrument_types</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_products</span><span class="p">(</span><span class="n">products</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********PRODUCTS*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">products</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_expiry_dates</span><span class="p">(</span><span class="n">expiry_dates</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********EXPIRY DATES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">expiry_dates</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_option_types</span><span class="p">(</span><span class="n">option_types</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********OPTION TYPES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">option_types</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_strike_prices</span><span class="p">(</span><span class="n">strike_prices</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********STRIKE PRICES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">strike_prices</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_account_limitations</span><span class="p">(</span><span class="n">account_limitations</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********ACCOUNT LIMITATIONS*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">account_limitations</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_market_message</span><span class="p">(</span><span class="n">market_message</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********MARKET MESSAGE*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">market_message</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_exchange_message</span><span class="p">(</span><span class="n">exchange_message</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********EXCHANGE MESSAGE*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">exchange_message</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_realtime_data</span><span class="p">(</span><span class="n">realtime_data</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********REALTIME DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">realtime_data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_realtime_snapshot_data</span><span class="p">(</span><span class="n">realtime_snapshot_data</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********REALTIME SNAPSHOT DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">realtime_snapshot_data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_historical_tick_data</span><span class="p">(</span><span class="n">historical_tick_data</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********HISTORICAL TICK DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">historical_tick_data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">on_message_historical_ohlc_data</span><span class="p">(</span><span class="n">historical_ohlc_data</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********HISTORICAL OHLC DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+   <span class="k">print</span><span class="p">(</span><span class="n">historical_ohlc_data</span><span class="p">)</span>
+
+<span class="c1">#Assign your callbacks. Every callback has some specific functions.</span>
+<span class="c1">#This callback will be called when user will be authenticated after successful connection.</span>
+<span class="c1">#Once the user is authenticated then only other predefined methods to access data from web socket can be called from inside this callback.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_authenticated</span> <span class="o">=</span> <span class="n">on_authenticated</span>
+
+<span class="c1">#Callback to receive the list of subscribed exchanges.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_get_exchanges</span> <span class="o">=</span> <span class="n">on_message_get_exchanges</span>
+
+<span class="c1">#Callback to receive the list of instruments using search key.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_instruments_on_search</span> <span class="o">=</span> <span class="n">on_message_instruments_on_search</span>
+
+<span class="c1">#Callback to receive the list of instruments for a given exchange exchanges.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_instruments</span> <span class="o">=</span> <span class="n">on_message_instruments</span>
+
+<span class="c1">#Callback to receive the last quote of a given instrument</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_last_quote</span> <span class="o">=</span> <span class="n">on_message_last_quote</span>
+
+<span class="c1">#Callback to receive the last quotes of a list of instruments.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_last_quote_array</span> <span class="o">=</span> <span class="n">on_message_last_quote_array</span>
+
+<span class="c1">#Callback to receive snapshot data of given instruments.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_snapshot_data</span> <span class="o">=</span> <span class="n">on_message_snapshot_data</span>
+
+<span class="c1">#Callback to receive the historical tick data of the given instruments</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_historical_tick_data</span> <span class="o">=</span> <span class="n">on_message_historical_tick_data</span>
+
+<span class="c1">#Callback to receive the historical ohlc data of the given instruments</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_historical_ohlc_data</span> <span class="o">=</span> <span class="n">on_message_historical_ohlc_data</span>
+
+<span class="c1">#Callback to receive the types of instruments available for an exchange.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_instrument_types</span> <span class="o">=</span> <span class="n">on_message_instrument_types</span>
+
+<span class="c1">#Callback to receive the list of products.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_product</span> <span class="o">=</span> <span class="n">on_message_products</span>
+
+<span class="c1">#Callback to receive the expiry dates.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_expiry_dates</span> <span class="o">=</span> <span class="n">on_message_expiry_dates</span>
+
+<span class="c1">#Callback to receive the option types.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_option_types</span> <span class="o">=</span> <span class="n">on_message_option_types</span>
+
+<span class="c1">#Callback to receive the strike prices.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_strike_prices</span> <span class="o">=</span> <span class="n">on_message_strike_prices</span>
+
+<span class="c1">#Callback to receive the account information.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_account_limitations</span> <span class="o">=</span> <span class="n">on_message_account_limitations</span>
+
+<span class="c1">#Callback to receive the market message.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_market_message</span> <span class="o">=</span> <span class="n">on_message_market_message</span>
+
+<span class="c1">#Callback to receive the exchange message.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_exchange_message</span> <span class="o">=</span> <span class="n">on_message_exchange_message</span>
+
+<span class="c1">#Callback to receive the real time data for the given instrument.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_realtime_data</span> <span class="o">=</span> <span class="n">on_message_realtime_data</span>
+
+<span class="c1">#Callback to receive the real time snapshot data for the given instrument.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_message_realtime_snapshot_data</span> <span class="o">=</span> <span class="n">on_message_realtime_snapshot_data</span>
+
+<span class="c1">#Connect to the web socket. You have to use the predefined callbacks to receive and process data.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Dhelm-gfeed-python-client’s documentation!</a></li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#install-from-sources">Install from Sources</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#methods-and-callbacks">Methods and Callbacks</a><ul>
+<li><a class="reference internal" href="#initialization">Initialization:</a></li>
+<li><a class="reference internal" href="#members">Members:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, KNC Solutions Private Limited..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0.
+    </div>
+  </body>
+</html>

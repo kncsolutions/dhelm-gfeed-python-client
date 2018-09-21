@@ -1,30 +1,31 @@
 from DhelmGfeedClient.gfeedclient import GfeedClient
 from DhelmGfeedClient.constants import Constants
-import  json
+import json
 import time
 import datetime
+
 client = GfeedClient("ws://nimblestream.lisuns.com:4526/","f31b6d7d-0138-428d-93ef-28acbd9632d2")
 
 
-def on_authenticated(ws):
-    ws.get_exchanges()
-    ws.get_instruments_on_search("NSE", "SBIN")
-    ws.get_instruments("NSE")
-    ws.get_last_quote("NSE", "SBIN")
-    ws.get_last_quotes_array("NSE", ["SBIN", "BEPL", "INFY"])
-    ws.get_snapshot("NSE", ["SBIN", "BEPL", "INFY"])
-    ws.get_instrument_types("NFO")
-    ws.get_products("NFO", "FUTIDX")
-    ws.get_expiry_dates("NFO", "FUTIDX", "NIFTY")
-    ws.get_option_types("NFO", "FUTIDX", "NIFTY", "25OCT2018")
-    ws.get_strike_prices("NFO", "FUTIDX", "NIFTY", "25OCT2018")
-    ws.get_limitations()
-    ws.get_market_message("NSE")
-    ws.get_exchange_message("NSE")
-    ws.subscribe_realtime("NSE", "SBIN")
-    ws.subscribe_realtime_snapshot("NSE", "SBIN", Constants.MINUTE)
-    ws.get_historical_tick_data("NSE", "SBIN", 10)
-    ws.get_historical_ohlc_data("NSE", "SBIN", Constants.HOUR,
+def on_authenticated(base_client):
+    base_client.get_exchanges()
+    base_client.get_instruments_on_search("NSE", "SBIN")
+    base_client.get_instruments("NSE")
+    base_client.get_last_quote("NSE", "SBIN")
+    base_client.get_last_quotes_array("NSE", ["SBIN", "BEPL", "INFY"])
+    base_client.get_snapshot("NSE", ["SBIN", "BEPL", "INFY"])
+    base_client.get_instrument_types("NFO")
+    base_client.get_products("NFO", "FUTIDX")
+    base_client.get_expiry_dates("NFO", "FUTIDX", "NIFTY")
+    base_client.get_option_types("NFO", "FUTIDX", "NIFTY", "25OCT2018")
+    base_client.get_strike_prices("NFO", "FUTIDX", "NIFTY", "25OCT2018")
+    base_client.get_limitations()
+    base_client.get_market_message("NSE")
+    base_client.get_exchange_message("NSE")
+    base_client.subscribe_realtime("NSE", "SBIN")
+    base_client.subscribe_realtime_snapshot("NSE", "SBIN", Constants.MINUTE)
+    base_client.get_historical_tick_data("NSE", "SBIN", 10)
+    base_client.get_historical_ohlc_data("NSE", "SBIN", Constants.HOUR,
                                 int(time.mktime((datetime.datetime(2018, 9, 13)).timetuple())),
                                 int(time.mktime((datetime.datetime.now()).timetuple())), 10)
 
