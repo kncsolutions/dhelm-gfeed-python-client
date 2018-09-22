@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Dhelm-gfeed-python-client’s documentation! &#8212; DhelmGfeedClient 1.0.0 documentation</title>
+    <title>Dhelm-gfeed-python-client’s documentation! &#8212; DhelmGfeedClient 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -29,7 +29,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 0.0.1 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -44,12 +44,24 @@
 Programmatic access to data  provides better and unique control over your algorithm. You access the raw data from your data provider, then feed into your own application and do whatever analysis you want in a unique way.</p>
 <p>For detailed integration and usage guidelines, please read through the pages.</p>
 </div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<p>The dhelm-gfeed-python-client is licensed under <em>Apache License, Version 2.0</em> license.</p>
+</div>
 <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>The client is tested with python 3.4+.</p>
 <div class="section" id="install-from-sources">
 <h2>Install from Sources<a class="headerlink" href="#install-from-sources" title="Permalink to this headline">¶</a></h2>
-<p>To install</p>
+<ol class="arabic">
+<li><p class="first">clone the repository:</p>
+<p>git clone <a class="reference external" href="https://github.com/kncsolutions/dhelm-gfeed-python-client.git">https://github.com/kncsolutions/dhelm-gfeed-python-client.git</a></p>
+</li>
+<li><p class="first">cd to dhelm-gfeed-python-client</p>
+</li>
+<li><p class="first">python setup.py install</p>
+</li>
+</ol>
 </div>
 </div>
 <div class="section" id="methods-and-callbacks">
@@ -57,35 +69,412 @@ Programmatic access to data  provides better and unique control over your algori
 <div class="section" id="initialization">
 <h2>Initialization:<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h2>
 <p>Initialize the client in the following way.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">DhelmGfeedClient.gfeedclient</span> <span class="kn">import</span> <span class="n">GfeedClient</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">GfeedClient</span><span class="p">(</span><span class="s2">&quot;&lt;ws_url&gt;&quot;</span><span class="p">,</span><span class="s2">&quot;&lt;api_key&gt;&quot;</span><span class="p">)</span>
+<span class="c1"># where,</span>
+<span class="c1">#&lt;ws_url&gt; : Replace &lt;ws_url&gt; with the web socket url</span>
+<span class="c1">#&lt;api_key&gt; : Replace &lt;api_key&gt; with your api key which you have got on subscription.</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="members">
 <h2>Members:<a class="headerlink" href="#members" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
-<li><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">connect()</span></code> : Call this method to connect to the web socket.</li>
-</ol>
-<p>On successful authentication <code class="docutils literal notranslate"><span class="pre">on_authenticated(base_client)</span></code> callback is fired.
-The <code class="docutils literal notranslate"><span class="pre">base_client</span></code> is the currently initialised WebSocket object.</p>
-<ol class="arabic simple" start="2">
-<li><code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">get_exchanges()</span></code> : Call this method to get the list of subscribed exchanges.</li>
-</ol>
+<div class="section" id="def-connect">
+<h3><strong>def connect()</strong><a class="headerlink" href="#def-connect" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><dl class="docutils">
-<dt>On successful execution <code class="docutils literal notranslate"><span class="pre">on_message_get_exchanges(list_exchanges)</span></code> callback is fired.</dt>
-<dd><code class="docutils literal notranslate"><span class="pre">list_exchanges</span></code> : The list of subscribed exchanges.</dd>
+<div>Call this method to connect to the web socket.</div></blockquote>
+<p>On successful authentication <strong>on_authenticated(base_client)</strong> callback is fired.
+The <strong>base_client</strong> is the currently initialised WebSocket object.</p>
+</div>
+<div class="section" id="def-get-exchanges">
+<h3><strong>def get_exchanges()</strong><a class="headerlink" href="#def-get-exchanges" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the list of subscribed exchanges.</p>
+<dl class="docutils">
+<dt>On successful execution <strong>on_message_get_exchanges(list_exchanges)</strong> callback is fired.</dt>
+<dd><strong>list_exchanges</strong> : The list of subscribed exchanges.</dd>
 </dl>
-</div></blockquote>
-<p>Sample Response:</p>
+<p><strong>Sample Response:</strong></p>
 <blockquote>
-<div><div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
- &quot;Result&quot;:[
- {&quot;Value&quot;:&quot;MCX&quot;},
- {&quot;Value&quot;:&quot;NFO&quot;},
- {&quot;Value&quot;:&quot;NSE&quot;}],
- &quot;MessageType&quot;:&quot;ExchangesResult&quot;
- s}
+<div><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+ <span class="nt">&quot;Result&quot;</span><span class="p">:[</span>
+ <span class="p">{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;MCX&quot;</span><span class="p">},</span>
+ <span class="p">{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">},</span>
+ <span class="p">{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;NSE&quot;</span><span class="p">}],</span>
+ <span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;ExchangesResult&quot;</span>
+ <span class="p">}</span>
 </pre></div>
 </div>
 </div></blockquote>
+</div>
+<div class="section" id="def-get-instruments-on-search-self-exchange-key-word">
+<h3><strong>def get_instruments_on_search(self, exchange, key_word)</strong><a class="headerlink" href="#def-get-instruments-on-search-self-exchange-key-word" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the list of instruments using search key word.</p>
+<p>On successful execution <strong>on_message_instruments_on_search(list_instruments)</strong> callback is fired.
+<strong>list_instruments</strong> : The list of instruments matching the search word.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;Request&quot;</span><span class="p">:{</span>
+<span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span>
+<span class="nt">&quot;Search&quot;</span><span class="p">:</span><span class="s2">&quot;NIF&quot;</span><span class="p">,</span>
+<span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetInstrumentsOnSearch&quot;</span>
+<span class="p">},</span>
+<span class="nt">&quot;Result&quot;</span><span class="p">:[</span>
+<span class="p">{</span><span class="nt">&quot;Identifier&quot;</span><span class="p">:</span><span class="s2">&quot;OPTIDX_NIFTY_28DEC2017_CE_10000&quot;</span><span class="p">,</span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="s2">&quot;OPTIDX&quot;</span><span class="p">,</span><span class="nt">&quot;Expiry&quot;</span><span class="p">:</span><span class="s2">&quot;28Dec2017&quot;</span><span class="p">,</span><span class="nt">&quot;StrikePrice&quot;</span><span class="p">:</span><span class="mf">10000.0</span><span class="p">,</span><span class="nt">&quot;Product&quot;</span><span class="p">:</span><span class="s2">&quot;NIFTY&quot;</span><span class="p">,</span><span class="nt">&quot;PriceQuotationUnit&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;OptionType&quot;</span><span class="p">:</span><span class="s2">&quot;CE&quot;</span><span class="p">,</span><span class="nt">&quot;ProductMonth&quot;</span><span class="p">:</span><span class="s2">&quot;28Dec2017&quot;</span><span class="p">,</span><span class="nt">&quot;UnderlyingAsset&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;UnderlyingAssetExpiry&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;IndexName&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;Identifier&quot;</span><span class="p">:</span><span class="s2">&quot;OPTIDX_NIFTY_28DEC2017_PE_8500&quot;</span><span class="p">,</span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="s2">&quot;OPTIDX&quot;</span><span class="p">,</span><span class="nt">&quot;Expiry&quot;</span><span class="p">:</span><span class="s2">&quot;28Dec2017&quot;</span><span class="p">,</span><span class="nt">&quot;StrikePrice&quot;</span><span class="p">:</span><span class="mf">8500.0</span><span class="p">,</span><span class="nt">&quot;Product&quot;</span><span class="p">:</span><span class="s2">&quot;NIFTY&quot;</span><span class="p">,</span><span class="nt">&quot;PriceQuotationUnit&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;OptionType&quot;</span><span class="p">:</span><span class="s2">&quot;PE&quot;</span><span class="p">,</span><span class="nt">&quot;ProductMonth&quot;</span><span class="p">:</span><span class="s2">&quot;28Dec2017&quot;</span><span class="p">,</span><span class="nt">&quot;UnderlyingAsset&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;UnderlyingAssetExpiry&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;IndexName&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">}</span>
+<span class="p">],</span>
+<span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;InstrumentsOnSearchResult&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-instruments-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none-strike-price-none">
+<h3><strong>def get_instruments(self, exchange, instrument_type=None, product=None, expiry=None,option_type=None,strike_price=None)</strong><a class="headerlink" href="#def-get-instruments-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none-strike-price-none" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the list of instruments from an exchange.</p>
+<p>On successful execution <strong>on_message_instruments(list_instruments)</strong> callback is fired.</p>
+<p><strong>list_instruments</strong> : The list of instruments.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+&quot;Request&quot;:{
+&quot;Exchange&quot;:&quot;NFO&quot;,
+&quot;MessageType&quot;:&quot;GetInstruments&quot;
+},
+&quot;Result&quot;:[
+{&quot;Identifier&quot;:&quot;OPTIDX_NIFTY_28DEC2017_CE_10000&quot;,&quot;Name&quot;:&quot;OPTIDX&quot;,&quot;Expiry&quot;:&quot;28Dec2017&quot;,&quot;StrikePrice&quot;:10000.0,&quot;Product&quot;:&quot;NIFTY&quot;,&quot;PriceQuotationUnit&quot;:&quot;&quot;,&quot;OptionType&quot;:&quot;CE&quot;,&quot;ProductMonth&quot;:&quot;28Dec2017&quot;,&quot;UnderlyingAsset&quot;:&quot;&quot;,&quot;UnderlyingAssetExpiry&quot;:&quot;&quot;,&quot;IndexName&quot;:&quot;&quot;}
+{&quot;Identifier&quot;:&quot;OPTIDX_NIFTY_28DEC2017_PE_8500&quot;,&quot;Name&quot;:&quot;OPTIDX&quot;,&quot;Expiry&quot;:&quot;28Dec2017&quot;,&quot;StrikePrice&quot;:8500.0,&quot;Product&quot;:&quot;NIFTY&quot;,&quot;PriceQuotationUnit&quot;:&quot;&quot;,&quot;OptionType&quot;:&quot;PE&quot;,&quot;ProductMonth&quot;:&quot;28Dec2017&quot;,&quot;UnderlyingAsset&quot;:&quot;&quot;,&quot;UnderlyingAssetExpiry&quot;:&quot;&quot;,&quot;IndexName&quot;:&quot;&quot;}
+..........................
+...........................
+],
+&quot;MessageType&quot;:&quot;InstrumentsResult&quot;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-last-quote-self-exchange-instrument-identifier">
+<h3><strong>def get_last_quote(self, exchange, instrument_identifier)</strong><a class="headerlink" href="#def-get-last-quote-self-exchange-instrument-identifier" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the last quote of an instrument.</p>
+<p>On successful execution <strong>on_message_last_quote(l_quote)</strong> callback is fired.</p>
+<p><strong>l_quote</strong> : The last quote of the given instrument.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span>
+<span class="nt">&quot;InstrumentIdentifier&quot;</span><span class="p">:</span><span class="s2">&quot;SBIN&quot;</span><span class="p">,</span>
+<span class="nt">&quot;LastTradeTime&quot;</span><span class="p">:</span><span class="mi">1508320899</span><span class="p">,</span>
+<span class="nt">&quot;ServerTime&quot;</span><span class="p">:</span><span class="mi">1508320899</span><span class="p">,</span>
+<span class="nt">&quot;AverageTradedPrice&quot;</span><span class="p">:</span><span class="mf">243.81</span><span class="p">,</span>
+<span class="nt">&quot;BuyPrice&quot;</span><span class="p">:</span><span class="mf">243.2</span><span class="p">,</span>
+<span class="nt">&quot;BuyQty&quot;</span><span class="p">:</span><span class="mi">36000</span><span class="p">,</span>
+<span class="nt">&quot;Close&quot;</span><span class="p">:</span><span class="mf">244.75</span><span class="p">,</span>
+<span class="nt">&quot;High&quot;</span><span class="p">:</span><span class="mf">244.6</span><span class="p">,</span>
+<span class="nt">&quot;Low&quot;</span><span class="p">:</span><span class="mf">243.0</span><span class="p">,</span>
+<span class="nt">&quot;LastTradePrice&quot;</span><span class="p">:</span><span class="mf">243.2</span><span class="p">,</span>
+<span class="nt">&quot;LastTradeQty&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="nt">&quot;Open&quot;</span><span class="p">:</span><span class="mf">244.35</span><span class="p">,</span>
+<span class="nt">&quot;OpenInterest&quot;</span><span class="p">:</span><span class="mi">50052000</span><span class="p">,</span>
+<span class="nt">&quot;SellPrice&quot;</span><span class="p">:</span><span class="mf">243.3</span><span class="p">,</span>
+<span class="nt">&quot;SellQty&quot;</span><span class="p">:</span><span class="mi">24000</span><span class="p">,</span>
+<span class="nt">&quot;TotalQtyTraded&quot;</span><span class="p">:</span><span class="mi">12864000</span><span class="p">,</span>
+<span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="mf">563571840.0</span><span class="p">,</span>
+<span class="nt">&quot;PreOpen&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span>
+<span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;LastQuoteResult&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-last-quote-array-self-exchange-instrument-identifiers">
+<h3><strong>def get_last_quote_array(self, exchange, instrument_identifiers)</strong><a class="headerlink" href="#def-get-last-quote-array-self-exchange-instrument-identifiers" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the last quotes of given instruments.</p>
+<p>On successful execution <strong>on_message_last_quote_array(l_quote_array)</strong> callback is fired.</p>
+<p><strong>l_quote_array</strong> : The last quotes of the given instruments.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+&quot;Result&quot;:[
+{&quot;Exchange&quot;:&quot;NSE&quot;,&quot;InstrumentIdentifier&quot;:&quot;SBIN&quot;,&quot;LastTradeTime&quot;:15363
+16145,&quot;ServerTime&quot;:1536316145,&quot;AverageTradedPrice&quot;:291.74,&quot;BuyPrice&quot;:0.0,&quot;BuyQty
+&quot;:0,&quot;Close&quot;:291.65,&quot;High&quot;:295.9,&quot;Low&quot;:289.45,&quot;LastTradePrice&quot;:291.65,&quot;LastTradeQ
+ty&quot;:0,&quot;Open&quot;:295.9,&quot;OpenInterest&quot;:0,&quot;QuotationLot&quot;:1.0,&quot;SellPrice&quot;:291.65,&quot;SellQ
+ty&quot;:30531,&quot;TotalQtyTraded&quot;:23716678,&quot;Value&quot;:6919103639.72,&quot;PreOpen&quot;:false,&quot;Messa
+geType&quot;:&quot;LastQuoteResult&quot;},
+
+{&quot;Exchange&quot;:&quot;NSE&quot;,&quot;InstrumentIdentifier&quot;:&quot;INFY&quot;,&quot;Last
+TradeTime&quot;:1536316142,&quot;ServerTime&quot;:1536316142,&quot;AverageTradedPrice&quot;:730.95,&quot;BuyPr
+ice&quot;:732.8,&quot;BuyQty&quot;:3128,&quot;Close&quot;:732.8,&quot;High&quot;:735.15,&quot;Low&quot;:723.8,&quot;LastTradePrice
+&quot;:732.8,&quot;LastTradeQty&quot;:0,&quot;Open&quot;:734.35,&quot;OpenInterest&quot;:0,&quot;QuotationLot&quot;:1.0,&quot;Sell
+Price&quot;:0.0,&quot;SellQty&quot;:0,&quot;TotalQtyTraded&quot;:6510605,&quot;Value&quot;:4758926724.75,&quot;PreOpen&quot;:
+false,&quot;MessageType&quot;:&quot;LastQuoteResult&quot;},
+
+{&quot;Exchange&quot;:&quot;NSE&quot;,&quot;InstrumentIdentifier&quot;:
+&quot;BEPL&quot;,&quot;LastTradeTime&quot;:1536315602,&quot;ServerTime&quot;:1536315601,&quot;AverageTradedPrice&quot;:1
+25.92,&quot;BuyPrice&quot;:0.0,&quot;BuyQty&quot;:0,&quot;Close&quot;:126.35,&quot;High&quot;:127.4,&quot;Low&quot;:124.6,&quot;LastTra
+dePrice&quot;:126.35,&quot;LastTradeQty&quot;:0,&quot;Open&quot;:127.0,&quot;OpenInterest&quot;:0,&quot;QuotationLot&quot;:1.
+0,&quot;SellPrice&quot;:126.35,&quot;SellQty&quot;:9,&quot;TotalQtyTraded&quot;:242004,&quot;Value&quot;:30473143.68,&quot;Pr
+eOpen&quot;:false,&quot;MessageType&quot;:&quot;LastQuoteResult&quot;}],
+
+&quot;MessageType&quot;:&quot;LastQuoteArrayResult&quot;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-snapshot-self-exchange-instrument-identifiers-periodicity-constants-minute-period-1">
+<h3><strong>def get_snapshot(self, exchange, instrument_identifiers, periodicity=Constants.MINUTE, period=1)</strong><a class="headerlink" href="#def-get-snapshot-self-exchange-instrument-identifiers-periodicity-constants-minute-period-1" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the snapshot quotes of given instruments.</p>
+<p>On successful execution <strong>on_message_snapshot_data(s_data)</strong> callback is fired.</p>
+<p><strong>l_data</strong> : The snapshot quotes of the given instruments.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;Result&quot;</span><span class="p">:[</span>
+<span class="p">{</span><span class="nt">&quot;InstrumentIdentifier&quot;</span><span class="p">:</span><span class="s2">&quot;BEPL&quot;</span><span class="p">,</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span><span class="nt">&quot;LastTradeTime&quot;</span><span class="p">:</span><span class="mi">15363</span>
+<span class="mi">09000</span><span class="p">,</span><span class="nt">&quot;TradedQty&quot;</span><span class="p">:</span><span class="mi">46846</span><span class="p">,</span><span class="nt">&quot;OpenInterest&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;Open&quot;</span><span class="p">:</span><span class="mf">125.65</span><span class="p">,</span><span class="nt">&quot;High&quot;</span><span class="p">:</span><span class="mf">126.9</span><span class="p">,</span><span class="nt">&quot;Low&quot;</span><span class="p">:</span><span class="mf">125.5</span><span class="p">,</span>
+<span class="nt">&quot;Close&quot;</span><span class="p">:</span><span class="mf">126.4</span><span class="p">},</span>
+
+<span class="p">{</span><span class="nt">&quot;InstrumentIdentifier&quot;</span><span class="p">:</span><span class="s2">&quot;SBIN&quot;</span><span class="p">,</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span><span class="nt">&quot;LastTradeTime&quot;</span><span class="p">:</span><span class="mi">1</span>
+<span class="mi">536309000</span><span class="p">,</span><span class="nt">&quot;TradedQty&quot;</span><span class="p">:</span><span class="mi">5417972</span><span class="p">,</span><span class="nt">&quot;OpenInterest&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;Open&quot;</span><span class="p">:</span><span class="mf">291.1</span><span class="p">,</span><span class="nt">&quot;High&quot;</span><span class="p">:</span><span class="mf">292.8</span><span class="p">,</span><span class="nt">&quot;Low&quot;</span><span class="p">:</span><span class="mi">2</span>
+<span class="mf">89.5</span><span class="p">,</span><span class="nt">&quot;Close&quot;</span><span class="p">:</span><span class="mf">292.4</span><span class="p">},</span>
+
+<span class="p">{</span><span class="nt">&quot;InstrumentIdentifier&quot;</span><span class="p">:</span><span class="s2">&quot;INFY&quot;</span><span class="p">,</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span><span class="nt">&quot;LastTradeTi</span>
+<span class="nt">me&quot;</span><span class="p">:</span><span class="mi">1536309000</span><span class="p">,</span><span class="nt">&quot;TradedQty&quot;</span><span class="p">:</span><span class="mi">651205</span><span class="p">,</span><span class="nt">&quot;OpenInterest&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;Open&quot;</span><span class="p">:</span><span class="mf">732.25</span><span class="p">,</span><span class="nt">&quot;High&quot;</span><span class="p">:</span><span class="mf">733.65</span><span class="p">,</span><span class="nt">&quot;</span>
+<span class="nt">Low&quot;</span><span class="p">:</span><span class="mf">730.55</span><span class="p">,</span><span class="nt">&quot;Close&quot;</span><span class="p">:</span><span class="mf">731.45</span><span class="p">}],</span>
+
+<span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;SnapshotResult&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-historical-tick-data-self-exchange-instrument-identifier-max-no-0-from-timestamp-none-to-timestamp-none">
+<h3><strong>def get_historical_tick_data(self,  exchange, instrument_identifier,max_no=0, from_timestamp=None, to_timestamp=None)</strong><a class="headerlink" href="#def-get-historical-tick-data-self-exchange-instrument-identifier-max-no-0-from-timestamp-none-to-timestamp-none" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get historical tick data of the given instruments.</p>
+<p>On successful execution <strong>on_message_historical_tick_data(h_t_d)</strong> callback is fired.</p>
+<p><strong>h_t_d</strong> : The historical tick data  of the given instrument.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+&quot;Result&quot;:[
+......................................
+{&quot;LastTradeTime&quot;:1536205500,&quot;LastTradePrice&quot;:298.0,&quot;QuotationLot&quot;:1,&quot;TradedQty&quot;:0,&quot;OpenInterest&quot;:0,&quot;BuyPrice&quot;:298.1,&quot;BuyQty
+&quot;:2980,&quot;SellPrice&quot;:298.45,&quot;SellQty&quot;:1835},
+
+{&quot;LastTradeTime&quot;:1536205500,&quot;LastTradePrice&quot;:299.0,&quot;QuotationLot&quot;:1,&quot;TradedQty&quot;:0,&quot;OpenInterest&quot;:0,&quot;BuyPrice&quot;:298.1,&quot;B
+uyQty&quot;:2980,&quot;SellPrice&quot;:298.45,&quot;SellQty&quot;:1835},
+
+{&quot;LastTradeTime&quot;:1536205500,&quot;LastTradePrice&quot;:298.1,&quot;QuotationLot&quot;:1,&quot;TradedQty&quot;:0,&quot;OpenInterest&quot;:0,&quot;BuyPrice&quot;:298
+.1,&quot;BuyQty&quot;:2980,&quot;SellPrice&quot;:298.45,&quot;SellQty&quot;:1835},
+
+{&quot;LastTradeTime&quot;:1536205500,&quot;LastTradePrice&quot;:298.0,&quot;QuotationLot&quot;:1,&quot;TradedQty&quot;:34510,&quot;OpenInterest&quot;:0,&quot;BuyP
+rice&quot;:298.1,&quot;BuyQty&quot;:2980,&quot;SellPrice&quot;:298.45,&quot;SellQty&quot;:1835}],
+
+&quot;MessageType&quot;:&quot;HistoryTickResult&quot;}
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-historical-ohlc-data-self-exchange-instrument-identifier-periodicity-from-timestamp-to-timestamp-max-no-0">
+<h3><strong>get_historical_ohlc_data(self, exchange, instrument_identifier, periodicity,from_timestamp, to_timestamp, max_no=0)</strong><a class="headerlink" href="#get-historical-ohlc-data-self-exchange-instrument-identifier-periodicity-from-timestamp-to-timestamp-max-no-0" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get historical ohlc data of the given instruments.</p>
+<p>On successful execution <strong>on_message_historical_ohlc_data(h_ohlc_d)</strong> callback is fired.</p>
+<p><strong>h_ohlc_d</strong> : The historical tick data  of the given instrument.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span><span class="nt">&quot;InstrumentIdentifier&quot;</span><span class="p">:</span><span class="s2">&quot;SBIN&quot;</span><span class="p">,</span><span class="nt">&quot;From&quot;</span><span class="p">:</span><span class="mi">1536019200</span><span class="p">,</span><span class="nt">&quot;To</span>
+<span class="nt">&quot;</span><span class="p">:</span><span class="mi">1536477902</span><span class="p">,</span><span class="nt">&quot;Max&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;Periodicity&quot;</span><span class="p">:</span><span class="s2">&quot;DAY&quot;</span><span class="p">,</span><span class="nt">&quot;Period&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetHistory&quot;</span><span class="p">},</span>
+<span class="nt">&quot;Result&quot;</span><span class="p">:[</span>
+<span class="p">{</span><span class="nt">&quot;LastTradeTime&quot;</span><span class="p">:</span><span class="mi">1536280200</span><span class="p">,</span><span class="nt">&quot;QuotationLot&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;TradedQty&quot;</span><span class="p">:</span><span class="mi">23716678</span><span class="p">,</span><span class="nt">&quot;Ope</span>
+<span class="nt">nInterest&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;Open&quot;</span><span class="p">:</span><span class="mf">295.9</span><span class="p">,</span><span class="nt">&quot;High&quot;</span><span class="p">:</span><span class="mf">295.9</span><span class="p">,</span><span class="nt">&quot;Low&quot;</span><span class="p">:</span><span class="mf">289.45</span><span class="p">,</span><span class="nt">&quot;Close&quot;</span><span class="p">:</span><span class="mf">291.65</span><span class="p">},</span>
+
+<span class="p">{</span><span class="nt">&quot;LastTradeTime&quot;</span><span class="p">:</span><span class="mi">1536193800</span><span class="p">,</span><span class="nt">&quot;QuotationLot&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;TradedQty&quot;</span><span class="p">:</span><span class="mi">18001336</span><span class="p">,</span><span class="nt">&quot;OpenInterest&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;Open&quot;</span><span class="p">:</span><span class="mi">29</span>
+<span class="mf">8.0</span><span class="p">,</span><span class="nt">&quot;High&quot;</span><span class="p">:</span><span class="mf">299.85</span><span class="p">,</span><span class="nt">&quot;Low&quot;</span><span class="p">:</span><span class="mf">294.5</span><span class="p">,</span><span class="nt">&quot;Close&quot;</span><span class="p">:</span><span class="mf">296.45</span><span class="p">},</span>
+
+<span class="p">{</span><span class="nt">&quot;LastTradeTime&quot;</span><span class="p">:</span><span class="mi">1536107400</span><span class="p">,</span><span class="nt">&quot;Quota</span>
+<span class="nt">tionLot&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;TradedQty&quot;</span><span class="p">:</span><span class="mi">22922686</span><span class="p">,</span><span class="nt">&quot;OpenInterest&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;Open&quot;</span><span class="p">:</span><span class="mf">296.5</span><span class="p">,</span><span class="nt">&quot;High&quot;</span><span class="p">:</span><span class="mf">298.85</span><span class="p">,</span><span class="nt">&quot;Low</span>
+<span class="nt">&quot;</span><span class="p">:</span><span class="mf">290.4</span><span class="p">,</span><span class="nt">&quot;Close&quot;</span><span class="p">:</span><span class="mf">296.55</span><span class="p">},</span>
+
+<span class="p">{</span><span class="nt">&quot;LastTradeTime&quot;</span><span class="p">:</span><span class="mi">1536021000</span><span class="p">,</span><span class="nt">&quot;QuotationLot&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;TradedQty&quot;</span>
+<span class="p">:</span><span class="mi">42859084</span><span class="p">,</span><span class="nt">&quot;OpenInterest&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;Open&quot;</span><span class="p">:</span><span class="mf">306.8</span><span class="p">,</span><span class="nt">&quot;High&quot;</span><span class="p">:</span><span class="mf">307.45</span><span class="p">,</span><span class="nt">&quot;Low&quot;</span><span class="p">:</span><span class="mf">295.45</span><span class="p">,</span><span class="nt">&quot;Close&quot;</span><span class="p">:</span><span class="mf">296.4</span>
+<span class="p">}],</span>
+
+<span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;HistoryOHLCResult&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-instrument-types-self-exchange">
+<h3><strong>def get_instrument_types(self, exchange)</strong><a class="headerlink" href="#def-get-instrument-types-self-exchange" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the list of instrument types available for an exchange.</p>
+<p>On successful execution <strong>on_message_instrument_types(i_types)</strong> callback is fired.</p>
+<p><strong>i_types</strong> : The list of instrument types.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetInstrumentTypes&quot;</span><span class="p">},</span>
+<span class="nt">&quot;Result&quot;</span><span class="p">:[</span>
+<span class="p">{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;FUTIDX&quot;</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;FUTIVX&quot;</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;FUTSTK&quot;</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;OPTIDX&quot;</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;OPTSTK&quot;</span><span class="p">}],</span>
+<span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;InstrumentTypesResult&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-products-self-exchange-instrument-type-none">
+<h3><strong>def get_products(self, exchange, instrument_type=None)</strong><a class="headerlink" href="#def-get-products-self-exchange-instrument-type-none" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the list of products available for an exchange.</p>
+<p>On successful execution <strong>on_message_product(p)</strong> callback is fired.</p>
+<p><strong>p</strong> : The list of products.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;Request&quot;:{&quot;Exchange&quot;:&quot;NFO&quot;,&quot;MessageType&quot;:&quot;GetProducts&quot;},
+&quot;Result&quot;:[
+{&quot;Value&quot;:&quot;BANKNIFTY&quot;},{&quot;Value&quot;:&quot;FTSE100&quot;},{&quot;Value&quot;:&quot;NIFTYCPSE&quot;},{&quot;Value&quot;:&quot;NIFTYINFRA&quot;},{&quot;Val
+ue&quot;:&quot;NIFTYIT&quot;},{&quot;Value&quot;:&quot;NIFTYMID50&quot;},{&quot;Value&quot;:&quot;NIFTYPSE&quot;},{&quot;Value&quot;:&quot;NIFTY&quot;},{&quot;V
+alue&quot;:&quot;INDIAVIX&quot;},{&quot;Value&quot;:&quot;ACC&quot;},
+................................
+],
+&quot;MessageType&quot;:&quot;ProductsResult&quot;}
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-expiry-dates-self-exchange-instrument-type-none-product-none">
+<h3><strong>def get_expiry_dates(self, exchange, instrument_type=None, product=None)</strong><a class="headerlink" href="#def-get-expiry-dates-self-exchange-instrument-type-none-product-none" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the list of expiry dates of different contracts for an exchange.</p>
+<p>On successful execution <strong>on_message_expiry_dates(e_dates)</strong> callback is fired.</p>
+<p><strong>e_dates</strong> : The list of expiry dates.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span><span class="nt">&quot;InstrumentType&quot;</span><span class="p">:</span><span class="s2">&quot;FUTIDX&quot;</span><span class="p">,</span><span class="nt">&quot;Product&quot;</span><span class="p">:</span><span class="s2">&quot;BANKNIFTY&quot;</span><span class="p">,</span><span class="nt">&quot;Me</span>
+<span class="nt">ssageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetExpiryDates&quot;</span><span class="p">},</span>
+<span class="nt">&quot;Result&quot;</span><span class="p">:[{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;25OCT2018&quot;</span><span class="p">},{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;27SEP2018</span>
+<span class="s2">&quot;</span><span class="p">},{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;29NOV2018&quot;</span><span class="p">}],</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;ExpiryDatesResult&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-option-types-self-exchange-instrument-type-none-product-none-expiry-none">
+<h3><strong>def get_option_types(self, exchange, instrument_type=None, product=None , expiry=None)</strong><a class="headerlink" href="#def-get-option-types-self-exchange-instrument-type-none-product-none-expiry-none" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the list of option types available for different contracts for an exchange.</p>
+<p>On successful execution <strong>on_message_option_types(o_types)</strong> callback is fired.</p>
+<p><strong>o_types</strong> : The list of option types.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span><span class="nt">&quot;InstrumentType&quot;</span><span class="p">:</span><span class="s2">&quot;FUTIDX&quot;</span><span class="p">,</span><span class="nt">&quot;Product&quot;</span><span class="p">:</span><span class="s2">&quot;BANKNIFTY&quot;</span><span class="p">,</span><span class="nt">&quot;Ex</span>
+<span class="nt">piry&quot;</span><span class="p">:</span><span class="s2">&quot;25OCT2018&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetOptionTypes&quot;</span><span class="p">},</span><span class="nt">&quot;Result&quot;</span><span class="p">:[{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;FF&quot;</span><span class="p">},{</span><span class="nt">&quot;Val</span>
+<span class="nt">ue&quot;</span><span class="p">:</span><span class="s2">&quot;XX&quot;</span><span class="p">}],</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;OptionTypesResult&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-strike-prices-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none">
+<h3><strong>def get_strike_prices(self, exchange, instrument_type=None, product=None, expiry=None, option_type=None)</strong><a class="headerlink" href="#def-get-strike-prices-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the list of strike prices for different contracts for an exchange.</p>
+<p>On successful execution <strong>on_message_strike_prices(s_prices)</strong> callback is fired.</p>
+<p><strong>s_prices</strong> : The list of strike prices.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;Request&quot;:{&quot;Exchange&quot;:&quot;NFO&quot;,&quot;MessageType&quot;:&quot;GetStrikePrices&quot;},&quot;Result&quot;:[{&quot;Value&quot;
+:&quot;0&quot;},{&quot;Value&quot;:&quot;25800&quot;},{&quot;Value&quot;:&quot;25900&quot;},{&quot;Value&quot;:&quot;26000&quot;},{&quot;Value&quot;:&quot;26100&quot;},{&quot;
+Value&quot;:&quot;26200&quot;},{&quot;Value&quot;:&quot;26300&quot;},{&quot;Value&quot;:&quot;26400&quot;},{&quot;Value&quot;:&quot;26500&quot;},
+............................
+],
+&quot;MessageType&quot;:&quot;StrikePricesResult&quot;}
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-limitations-self">
+<h3><strong>def get_limitations(self)</strong><a class="headerlink" href="#def-get-limitations-self" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get your account details and limitations.</p>
+<p>On successful execution <strong>on_message_account_limitations(a_limit)</strong> callback is fired.</p>
+<p><strong>a_limit</strong> : Account details and limitations.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;GeneralParams&quot;:{&quot;AllowedBandwidthPerHour&quot;:-1.0,&quot;AllowedCallsPerHour&quot;:7200,&quot;All
+owedCallsPerMonth&quot;:5356800,&quot;AllowedBandwidthPerMonth&quot;:-1.0,&quot;ExpirationDate&quot;:1538
+159399,&quot;Enabled&quot;:true},
+&quot;AllowedExchanges&quot;:[{&quot;AllowedInstruments&quot;:200,&quot;DataDelay&quot;
+:0,&quot;ExchangeName&quot;:&quot;CDS&quot;},{&quot;AllowedInstruments&quot;:200,&quot;DataDelay&quot;:0,&quot;ExchangeName&quot;:
+&quot;MCX&quot;},{&quot;AllowedInstruments&quot;:200,&quot;DataDelay&quot;:0,&quot;ExchangeName&quot;:&quot;NFO&quot;},{&quot;AllowedIn
+struments&quot;:160,&quot;DataDelay&quot;:0,&quot;ExchangeName&quot;:&quot;NSE&quot;},{&quot;AllowedInstruments&quot;:40,&quot;Dat
+aDelay&quot;:0,&quot;ExchangeName&quot;:&quot;NSE_IDX&quot;}],
+&quot;AllowedFunctions&quot;:[{&quot;FunctionName&quot;:&quot;GetExchangeMessages&quot;,&quot;IsEnabled&quot;:false},
+{&quot;FunctionName&quot;:&quot;GetHistory&quot;,&quot;IsEnabled&quot;:true}
+,{&quot;FunctionName&quot;:&quot;GetLastQuote&quot;,&quot;IsEnabled&quot;:false},{&quot;FunctionName&quot;:&quot;GetLastQuote
+Array&quot;,&quot;IsEnabled&quot;:false},{&quot;FunctionName&quot;:&quot;GetLastQuoteArrayShort&quot;,&quot;IsEnabled&quot;:f
+alse},{&quot;FunctionName&quot;:&quot;GetLastQuoteShort&quot;,&quot;IsEnabled&quot;:false},{&quot;FunctionName&quot;:&quot;Ge
+tMarketMessages&quot;,&quot;IsEnabled&quot;:false},{&quot;FunctionName&quot;:&quot;GetSnapshot&quot;,&quot;IsEnabled&quot;:tr
+ue},{&quot;FunctionName&quot;:&quot;SubscribeRealtime&quot;,&quot;IsEnabled&quot;:false},{&quot;FunctionName&quot;:&quot;Subs
+cribeSnapshot&quot;,&quot;IsEnabled&quot;:false}],
+&quot;HistoryLimitation&quot;:{&quot;TickEnabled&quot;:true,&quot;DayE
+nabled&quot;:true,&quot;WeekEnabled&quot;:true,&quot;MonthEnabled&quot;:true,&quot;MaxEOD&quot;:100000,&quot;MaxIntraday
+&quot;:44,&quot;Hour_1Enabled&quot;:true,&quot;Hour_2Enabled&quot;:true,&quot;Hour_3Enabled&quot;:true,&quot;Hour_4Enabl
+ed&quot;:true,&quot;Hour_6Enabled&quot;:true,&quot;Hour_8Enabled&quot;:true,&quot;Hour_12Enabled&quot;:true,&quot;Minute
+_1Enabled&quot;:true,&quot;Minute_2Enabled&quot;:true,&quot;Minute_3Enabled&quot;:true,&quot;Minute_4Enabled&quot;:
+true,&quot;Minute_5Enabled&quot;:true,&quot;Minute_6Enabled&quot;:true,&quot;Minute_10Enabled&quot;:true,&quot;Minu
+te_12Enabled&quot;:true,&quot;Minute_15Enabled&quot;:true,&quot;Minute_20Enabled&quot;:true,&quot;Minute_30Ena
+bled&quot;:true,&quot;MaxTicks&quot;:2},
+&quot;MessageType&quot;:&quot;LimitationResult&quot;}
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-market-message-self-exchange">
+<h3><strong>def get_market_message(self, exchange)</strong><a class="headerlink" href="#def-get-market-message-self-exchange" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the market message for the given exchange.</p>
+<p>On successful execution <strong>on_message_market_message(m_m)</strong> callback is fired.</p>
+<p><strong>m_m</strong> : The market message.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetMarketMessages&quot;</span><span class="p">},</span>
+<span class="nt">&quot;Result&quot;</span><span class="p">:[{</span><span class="nt">&quot;ServerTime&quot;</span><span class="p">:</span><span class="mi">1536314399</span><span class="p">,</span><span class="nt">&quot;SessionID&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;MarketType&quot;</span><span class="p">:</span><span class="s2">&quot;Normal Market Close&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType</span>
+<span class="nt">&quot;</span><span class="p">:</span><span class="s2">&quot;MarketMessagesItemResult&quot;</span><span class="p">}],</span>
+<span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;MarketMessagesResult&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-get-exchange-message-self-exchange">
+<h3><strong>def get_exchange_message(self, exchange)</strong><a class="headerlink" href="#def-get-exchange-message-self-exchange" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to get the exchange message for the given exchange.</p>
+<p>On successful execution <strong>on_message_exchange_message(e_m)</strong> callback is fired.</p>
+<p><strong>e_m</strong> : The exchange message.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;Request&quot;</span><span class="p">:{</span>
+<span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span>
+<span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetExchangeMessages&quot;</span>
+<span class="p">},</span>
+<span class="nt">&quot;Result&quot;</span><span class="p">:[</span>
+<span class="p">{</span><span class="nt">&quot;ServerTime&quot;</span><span class="p">:</span><span class="mi">1391822398</span><span class="p">,</span><span class="nt">&quot;Identifier&quot;</span><span class="p">:</span><span class="s2">&quot;Market&quot;</span><span class="p">,</span><span class="nt">&quot;Message&quot;</span><span class="p">:</span><span class="s2">&quot;Members are requested to note that  ...&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;ExchangeMessagesItemResult&quot;</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;ServerTime&quot;</span><span class="p">:</span><span class="mi">1391822399</span><span class="p">,</span><span class="nt">&quot;Identifier&quot;</span><span class="p">:</span><span class="s2">&quot;Market&quot;</span><span class="p">,</span><span class="nt">&quot;Message&quot;</span><span class="p">:</span><span class="s2">&quot;2013 shall be levied subsequently.&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;ExchangeMessagesItemResult&quot;</span><span class="p">}</span>
+<span class="p">],</span>
+<span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;ExchangeMessagesResult&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-subscribe-realtime-self-exchange-instrument-identifier-unsubscribe-false">
+<h3><strong>def subscribe_realtime(self, exchange, instrument_identifier, unsubscribe=False)</strong><a class="headerlink" href="#def-subscribe-realtime-self-exchange-instrument-identifier-unsubscribe-false" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to subscribe to real time data for the given exchange and given instrument.</p>
+<p>On successful execution <strong>on_message_realtime_data(r_r)</strong> callback is fired.</p>
+<p><strong>r_r</strong> : The real time data.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;Exchange&quot;:&quot;NSE&quot;,&quot;InstrumentIdentifier&quot;:&quot;SBIN&quot;,&quot;LastTradeTime&quot;:1536558991,&quot;Serv
+erTime&quot;:1536558991,&quot;AverageTradedPrice&quot;:291.31,&quot;BuyPrice&quot;:290.15,&quot;BuyQty&quot;:5441,&quot;
+Close&quot;:291.65,&quot;High&quot;:293.25,&quot;Low&quot;:289.15,&quot;LastTradePrice&quot;:290.2,&quot;LastTradeQty&quot;:3
+23,&quot;Open&quot;:290.65,&quot;OpenInterest&quot;:0,&quot;QuotationLot&quot;:0.0,&quot;SellPrice&quot;:290.3,&quot;SellQty&quot;
+:551,&quot;TotalQtyTraded&quot;:7422459,&quot;Value&quot;:2162236531.29,&quot;PreOpen&quot;:false,&quot;MessageType
+&quot;:&quot;RealtimeResult&quot;}
+
+..............................
+</pre></div>
+</div>
+</div>
+<div class="section" id="subscribe-realtime-snapshot-self-exchange-instrument-identifier-periodicity-unsubscribe-false">
+<h3><strong>subscribe_realtime_snapshot(self, exchange, instrument_identifier, periodicity, unsubscribe=False)</strong><a class="headerlink" href="#subscribe-realtime-snapshot-self-exchange-instrument-identifier-periodicity-unsubscribe-false" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to subscribe to real time snapshot data for the given exchange, given instrument and given periodicity.</p>
+<p>On successful execution <strong>on_message_realtime_snapshot_data(r_r)</strong> callback is fired.</p>
+<p><strong>r_r</strong> : The real time snapshot data.</p>
+<p><strong>Sample Response:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;Exchange&quot;:&quot;NSE&quot;,&quot;InstrumentIdentifier&quot;:&quot;SBIN&quot;,&quot;Periodicity&quot;:&quot;MINUTE&quot;,&quot;LastTrad
+eTime&quot;:1536559380,&quot;TradedQty&quot;:58767,&quot;OpenInterest&quot;:0,&quot;Open&quot;:290.4,&quot;High&quot;:290.4,&quot;
+Low&quot;:289.95,&quot;Close&quot;:290.15,&quot;MessageType&quot;:&quot;RealtimeSnapshotResult&quot;}
+
+..............................
+</pre></div>
+</div>
+</div>
+<div class="section" id="def-disconnect-self">
+<h3><strong>def disconnect(self)</strong><a class="headerlink" href="#def-disconnect-self" title="Permalink to this headline">¶</a></h3>
+<p>Call this method to disconnect the client.</p>
+<p>On disconnection <strong>on_close(base_client, code, reason)</strong> callback is fired.</p>
+</div>
+<div class="section" id="others">
+<h3><strong>Others</strong><a class="headerlink" href="#others" title="Permalink to this headline">¶</a></h3>
+<p>The client will automatically try to reconnect  to the server. On reconnection the <strong>on_reconnect(self, attempts_count)</strong>
+will be fired.</p>
+<p>If maximum number of reconnection attempts have been exhausted the <strong>on_reconnection_max_tries()</strong> callback will be fired.</p>
+<p>To get more details about the methods and their parameters visit <a class="reference external" href="DhelmGfeedClient.html#module-DhelmGfeedClient.gfeedclient">here</a></p>
+</div>
 </div>
 </div>
 <div class="section" id="example-usage">
@@ -253,6 +642,15 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********HISTORICAL OHLC DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">historical_ohlc_data</span><span class="p">)</span>
 
+<span class="k">def</span> <span class="nf">on_reconnect</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+++++++Reconnected+++++++++</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">on_reconnection_max_tries</span><span class="p">():</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;+++MAX RECONNECT ATTEMPTS MADE++++&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">on_close</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+   <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+++++++SUCCESFULLY DISCONNCTED+++++++++</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
 <span class="c1">#Assign your callbacks. Every callback has some specific functions.</span>
 <span class="c1">#This callback will be called when user will be authenticated after successful connection.</span>
 <span class="c1">#Once the user is authenticated then only other predefined methods to access data from web socket can be called from inside this callback.</span>
@@ -312,10 +710,28 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <span class="c1">#Callback to receive the real time snapshot data for the given instrument.</span>
 <span class="n">client</span><span class="o">.</span><span class="n">on_message_realtime_snapshot_data</span> <span class="o">=</span> <span class="n">on_message_realtime_snapshot_data</span>
 
+<span class="c1">#Callback on disconnection.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_close</span> <span class="o">=</span> <span class="n">on_close</span>
+
+<span class="c1">#Callback on reconnection.</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_reconnect</span> <span class="o">=</span> <span class="n">on_reconnect</span>
+
+<span class="c1">#Callback on maximum retries for reconnection have been exhausted</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_reconnection_max_tries</span> <span class="o">=</span> <span class="n">on_reconnection_max_tries</span>
+
 <span class="c1">#Connect to the web socket. You have to use the predefined callbacks to receive and process data.</span>
 <span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="notice">
+<h1>Notice<a class="headerlink" href="#notice" title="Permalink to this headline">¶</a></h1>
+<p>Dhelm® is a trademark of the KNC Solutions Private Limited.</p>
+</div>
+<div class="section" id="conclusion">
+<h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h1>
+<p>If you have any query feel free to email us at <a class="reference external" href="mailto:developer&#37;&#52;&#48;kncsolutions&#46;in">developer<span>&#64;</span>kncsolutions<span>&#46;</span>in</a>.
+Or you can raise an issue <a class="reference external" href="https://github.com/kncsolutions/dhelm-gfeed-python-client/issues">here</a>.</p>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
@@ -335,16 +751,42 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
   <h3><a href="#">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Dhelm-gfeed-python-client’s documentation!</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
 <li><a class="reference internal" href="#installation">Installation</a><ul>
 <li><a class="reference internal" href="#install-from-sources">Install from Sources</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#methods-and-callbacks">Methods and Callbacks</a><ul>
 <li><a class="reference internal" href="#initialization">Initialization:</a></li>
-<li><a class="reference internal" href="#members">Members:</a></li>
+<li><a class="reference internal" href="#members">Members:</a><ul>
+<li><a class="reference internal" href="#def-connect"><strong>def connect()</strong></a></li>
+<li><a class="reference internal" href="#def-get-exchanges"><strong>def get_exchanges()</strong></a></li>
+<li><a class="reference internal" href="#def-get-instruments-on-search-self-exchange-key-word"><strong>def get_instruments_on_search(self, exchange, key_word)</strong></a></li>
+<li><a class="reference internal" href="#def-get-instruments-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none-strike-price-none"><strong>def get_instruments(self, exchange, instrument_type=None, product=None, expiry=None,option_type=None,strike_price=None)</strong></a></li>
+<li><a class="reference internal" href="#def-get-last-quote-self-exchange-instrument-identifier"><strong>def get_last_quote(self, exchange, instrument_identifier)</strong></a></li>
+<li><a class="reference internal" href="#def-get-last-quote-array-self-exchange-instrument-identifiers"><strong>def get_last_quote_array(self, exchange, instrument_identifiers)</strong></a></li>
+<li><a class="reference internal" href="#def-get-snapshot-self-exchange-instrument-identifiers-periodicity-constants-minute-period-1"><strong>def get_snapshot(self, exchange, instrument_identifiers, periodicity=Constants.MINUTE, period=1)</strong></a></li>
+<li><a class="reference internal" href="#def-get-historical-tick-data-self-exchange-instrument-identifier-max-no-0-from-timestamp-none-to-timestamp-none"><strong>def get_historical_tick_data(self,  exchange, instrument_identifier,max_no=0, from_timestamp=None, to_timestamp=None)</strong></a></li>
+<li><a class="reference internal" href="#get-historical-ohlc-data-self-exchange-instrument-identifier-periodicity-from-timestamp-to-timestamp-max-no-0"><strong>get_historical_ohlc_data(self, exchange, instrument_identifier, periodicity,from_timestamp, to_timestamp, max_no=0)</strong></a></li>
+<li><a class="reference internal" href="#def-get-instrument-types-self-exchange"><strong>def get_instrument_types(self, exchange)</strong></a></li>
+<li><a class="reference internal" href="#def-get-products-self-exchange-instrument-type-none"><strong>def get_products(self, exchange, instrument_type=None)</strong></a></li>
+<li><a class="reference internal" href="#def-get-expiry-dates-self-exchange-instrument-type-none-product-none"><strong>def get_expiry_dates(self, exchange, instrument_type=None, product=None)</strong></a></li>
+<li><a class="reference internal" href="#def-get-option-types-self-exchange-instrument-type-none-product-none-expiry-none"><strong>def get_option_types(self, exchange, instrument_type=None, product=None , expiry=None)</strong></a></li>
+<li><a class="reference internal" href="#def-get-strike-prices-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none"><strong>def get_strike_prices(self, exchange, instrument_type=None, product=None, expiry=None, option_type=None)</strong></a></li>
+<li><a class="reference internal" href="#def-get-limitations-self"><strong>def get_limitations(self)</strong></a></li>
+<li><a class="reference internal" href="#def-get-market-message-self-exchange"><strong>def get_market_message(self, exchange)</strong></a></li>
+<li><a class="reference internal" href="#def-get-exchange-message-self-exchange"><strong>def get_exchange_message(self, exchange)</strong></a></li>
+<li><a class="reference internal" href="#def-subscribe-realtime-self-exchange-instrument-identifier-unsubscribe-false"><strong>def subscribe_realtime(self, exchange, instrument_identifier, unsubscribe=False)</strong></a></li>
+<li><a class="reference internal" href="#subscribe-realtime-snapshot-self-exchange-instrument-identifier-periodicity-unsubscribe-false"><strong>subscribe_realtime_snapshot(self, exchange, instrument_identifier, periodicity, unsubscribe=False)</strong></a></li>
+<li><a class="reference internal" href="#def-disconnect-self"><strong>def disconnect(self)</strong></a></li>
+<li><a class="reference internal" href="#others"><strong>Others</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#example-usage">Example usage</a></li>
+<li><a class="reference internal" href="#notice">Notice</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
@@ -380,7 +822,7 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 0.0.1 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

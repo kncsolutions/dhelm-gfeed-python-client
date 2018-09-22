@@ -1,4 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+    **gfeedclient.py**
 
+    - Copyright (c) 2018, KNC Solutions Private Limited.
+    - License: 'Apache License, Version 2.0'.
+    - version: 1.0.0
+"""
 from twisted.python import log
 from autobahn.twisted.websocket import WebSocketClientProtocol
 from autobahn.twisted.websocket import WebSocketClientFactory,connectWS
@@ -54,6 +61,8 @@ class _GfeedClientFactory(WebSocketClientFactory, ReconnectingClientFactory):
         self.on_close = None
         self.on_connect = None
         self.on_reconnect = None
+        self.on_reconnection_max_tries = None
+        self.on_disconnect = None
         self.on_authenticated = None
         self.on_message = None
         self.on_message_get_exchanges = None
@@ -78,35 +87,49 @@ class _GfeedClientFactory(WebSocketClientFactory, ReconnectingClientFactory):
         WebSocketClientFactory.__init__(self, *args, **kwargs)
 
         def clientConnectionFailed(self, connector, reason):
+            if self.on_reconnect:
+                self.on_reconnect(self.retries)
             print("Client connection failed .. retrying ..")
             self.retry(connector)
+            if self.maxRetries is not None and (self.retries > self.maxRetries):
+                if self.on_reconnection_max_tries:
+                    self.on_reconnection_max_tries()
 
         def clientConnectionLost(self, connector, reason):
             print("Client connection lost .. retrying ..")
+            if self.retries > 0:
+                if self.on_reconnect:
+                   self.on_reconnect(self.retries)
             self.retry(connector)
+            if self.maxRetries is not None and (self.retries > self.maxRetries):
+                if self.on_reconnection_max_tries:
+                    self.on_reconnection_max_tries()
 
 
 
 class GfeedClient(object):
     """
        The  client to connect to Global datafeed websocket data.
+
+       - **ws_url**: The web socket url.(required)
+       - **param api_key**: Your api  key.(required)
+       - **param debug**: By default false. Set true to run in debug mode.(optional)
+       - **param reconnect**: By default true. Set false to off auto reconnection.(optional)
+       - **param reconnect_max_tries**: Maximum no of retries.(optional)
+       - **param reconnect_max_delay**: Maximum delay.(optional)
+       - **param connect_timeout**: Connection delay.(optional)
     """
+
     def __init__(self, ws_url, api_key, debug=False, max_retries=Constants.MAX_RETRIES, max_delay=Constants.MAXDELAY,
                  connect_timeout=Constants.TIMEOUT):
         """
-        :param ws_url: The web socket url.
-        :param api_key: Your api  key.
-        :param debug: By default false. Set true to run in debug mode.
-        :param reconnect: By default true. Set false to off auto reconnection.
-        :param reconnect_max_tries:
-        :param reconnect_max_delay:
-        :param connect_timeout:
+
         """
         if (ws_url == ""):
             raise Exception("Web socket url cannot be null!")
         if(api_key==""):
             raise Exception("Api key cannot be null!");
-        print(ws_url)
+       
         self.ws_url = ws_url
         self.api_key = api_key
         self.is_authenticated = False
@@ -124,6 +147,8 @@ class GfeedClient(object):
         self.on_close = None
         self.on_connect = None
         self.on_reconnect = None
+        self.on_reconnection_max_tries = None
+        self.on_disconnect = None
         self.on_authenticated = None
         self.on_message = None
         self.on_message_get_exchanges = None
@@ -180,6 +205,8 @@ class GfeedClient(object):
         self.factory.on_message = self._on_message
         self.factory.on_connect = self._on_connect
         self.factory.on_reconnect = self._on_reconnect
+        self.factory.on_reconnection_max_tries = self._on_reconnection_max_tries
+        self.factory.on_disconnect = self._on_disconnect
         self.factory.on_authenticated = self._on_authenticated
         self.factory.on_message_get_exchanges = self._on_message_get_exchanges
         self.factory.on_message_instruments_on_search = self._on_message_instruments_on_search
@@ -209,8 +236,12 @@ class GfeedClient(object):
         if not reactor.running:
             reactor.run()
 
-    def disconnect(self, code=None, reason=None):
-        """Close the WebSocket connection."""
+    def disconnect(self):
+        """
+        Call this method to disconnect the client.
+
+        On disconnection **on_close(base_client, code, reason)** callback is fired.
+        """
         self.is_disconnected_by_user = True
         if self.factory:
             self.factory.stopTrying()
@@ -226,17 +257,19 @@ class GfeedClient(object):
 
     def _authenticate(self, base_client):
         str_message = '{"MessageType":"Authenticate","Password":"' + self.api_key + '"}'
-        print(str_message)
         payload = str_message.encode('utf8')
         base_client.sendMessage(payload, isBinary=False)
 
     def get_exchanges(self):
         """
         Call this method to get the list of subscribed exchanges.
+
+        On successful execution **on_message_get_exchanges(list_exchanges)** callback is fired.
+
+        **list_exchanges** : The list of subscribed exchanges.
         """
         if self.is_authenticated:
             str_message = '{"MessageType":\"'+Constants.GET_EXCHANGES+'\"}'
-            print(str_message)
             payload = str_message.encode('utf8')
             try:
                 self.base_client.sendMessage(payload, isBinary=False)
@@ -247,9 +280,14 @@ class GfeedClient(object):
 
     def get_instruments_on_search(self, exchange, key_word):
         """
+        Call this method to get the list of instruments using search key word.
+
+        On successful execution **on_message_instruments_on_search(list_instruments)** callback is fired.
+
+        **list_instruments** : The list of instruments matching the search word.
+
         :param exchange: The exchange(required)
         :param key_word: The search word(required).
-        :return:
         """
         if self.is_authenticated:
             str_message = {}
@@ -262,6 +300,12 @@ class GfeedClient(object):
     def get_instruments(self, exchange, instrument_type=None, product=None, expiry=None,
                         option_type=None, strike_price=None):
         """
+        Call this method to get the list of instruments from an exchange.
+
+        On successful execution **on_message_instruments(list_instruments)** callback is fired.
+
+        **list_instruments** : The list of instruments.
+
         :param exchange: The exchange(required)
         :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
         :param product:  The product, e.g. NIFTY, BANKNIFTY etc(optional).
@@ -287,6 +331,12 @@ class GfeedClient(object):
 
     def get_last_quote(self, exchange, instrument_identifier):
         """
+        Call this method to get the last quote of an instrument.
+
+        On successful execution **on_message_last_quote(l_quote)** callback is fired.
+
+        **l_quote** : The last quote of the given instrument.
+
         :param exchange: The exchange(required)
         :param instrument_identifier: The instrument identifier(required)
         """
@@ -299,6 +349,12 @@ class GfeedClient(object):
 
     def get_last_quotes_array(self, exchange, instrument_identifiers):
         """
+        Call this method to get the last quotes of given instruments.
+
+        On successful execution **on_message_last_quote_array(l_quote_array)** callback is fired.
+
+        **l_quote_array** : The last quotes of the given instruments.
+
         :param exchange: The exchange(required)
         :param instrument_identifiers: The instrument identifiers(required)
         :return:
@@ -317,6 +373,12 @@ class GfeedClient(object):
 
     def get_snapshot(self, exchange, instrument_identifiers, periodicity=Constants.MINUTE, period=1):
         """
+        Call this method to get the snapshot quotes of given instruments.
+
+        On successful execution **on_message_snapshot_data(s_data)** callback is fired.
+
+        **l_data** : The snapshot quotes of the given instruments.
+
         :param exchange: The exchange(required)
         :param instrument_identifiers: The instrument identifiers(required)
         :param periodicity: The periodicity/"HOUR" or "MINUTE"(optional).
@@ -339,6 +401,12 @@ class GfeedClient(object):
     def get_historical_tick_data(self,  exchange, instrument_identifier,
                                  max_no=0, from_timestamp=None, to_timestamp=None):
         """
+        Call this method to get historical tick data of the given instruments.
+
+        On successful execution **on_message_historical_tick_data(h_t_d)** callback is fired.
+
+        **h_t_d** : The historical tick data  of the given instrument.
+
         :param exchange: The exchange(required)
         :param instrument_identifier: The instrument identifier(required).
         :param max_no: Numerical value of maximum records that should be returned(optional).
@@ -356,11 +424,16 @@ class GfeedClient(object):
         str_message["Max"] = max_no
         payload = (json.dumps(str_message)).encode('utf8')
         self.base_client.sendMessage(payload, isBinary=False)
-        print(str_message)
 
     def get_historical_ohlc_data(self, exchange, instrument_identifier, periodicity,
                                  from_timestamp, to_timestamp, max_no=0):
         """
+        Call this method to get historical ohlc data of the given instruments.
+
+        On successful execution **on_message_historical_ohlc_data(h_ohlc_d)** callback is fired.
+
+        **h_ohlc_d** : The historical tick data  of the given instrument.
+
         :param exchange: The exchange(required)
         :param instrument_identifier: The instrument identifier(required).
         :param periodicity: "HOUR"."MINUTE"."DAY","WEEK", or "MONTH"(required).
@@ -378,10 +451,15 @@ class GfeedClient(object):
         str_message["Max"] = max_no
         payload = (json.dumps(str_message)).encode('utf8')
         self.base_client.sendMessage(payload, isBinary=False)
-        print(str_message)
 
     def get_instrument_types(self, exchange):
         """
+        Call this method to get the list of instrument types available for an exchange.
+
+        On successful execution **on_message_instrument_types(i_types)** callback is fired.
+
+        **i_types** : The list of instrument types.
+
         :param exchange: The exchange(required)
         """
         str_message = {}
@@ -392,6 +470,12 @@ class GfeedClient(object):
 
     def get_products(self, exchange, instrument_type=None):
         """
+        Call this method to get the list of products available for an exchange.
+
+        On successful execution **on_message_product(p)** callback is fired.
+
+        **p** : The list of products.
+
         :param exchange: The exchange(required)
         :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
         """
@@ -405,6 +489,12 @@ class GfeedClient(object):
 
     def get_expiry_dates(self, exchange, instrument_type=None, product=None):
         """
+        Call this method to get the list of expiry dates of different contracts for an exchange.
+
+        On successful execution **on_message_expiry_dates(e_dates)** callback is fired.
+
+        **e_dates** : The list of expiry dates.
+
         :param exchange: The exchange(required)
         :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
         :param product:  The product, e.g. NIFTY,BANKNIFTY etc(optional).
@@ -421,6 +511,12 @@ class GfeedClient(object):
 
     def get_option_types(self, exchange, instrument_type=None, product=None , expiry=None):
         """
+        Call this method to get the list of option types available for different contracts for an exchange.
+
+        On successful execution **on_message_option_types(o_types)** callback is fired.
+
+        **o_types** : The list of option types.
+
         :param exchange: The exchange(required)
         :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
         :param product:  The product, e.g. NIFTY, BANKNIFTY etc(optional).
@@ -440,6 +536,12 @@ class GfeedClient(object):
 
     def get_strike_prices(self, exchange, instrument_type=None, product=None, expiry=None, option_type=None):
         """
+        Call this method to get the list of strike prices for different contracts for an exchange.
+
+        On successful execution **on_message_strike_prices(s_prices)** callback is fired.
+
+        **s_prices** : The list of strike prices.
+
         :param exchange: The exchange(required)
         :param instrument_type: The type of the instrument, e.g. FUTIDX, OPTIDX etc(optional)
         :param product:  The product, e.g. NIFTY, BANKNIFTY etc(optional).
@@ -462,7 +564,11 @@ class GfeedClient(object):
 
     def get_limitations(self):
         """
-        Get account information.
+        Call this method to get your account details and limitations.
+
+        On successful execution **on_message_account_limitations(a_limit)** callback is fired.
+
+        **a_limit** : Account details and limitations.
         """
         str_message = {}
         str_message["MessageType"] = Constants.GET_LIMITATIONS
@@ -471,6 +577,12 @@ class GfeedClient(object):
 
     def get_market_message(self, exchange):
         """
+        Call this method to get the market message for the given exchange.
+
+        On successful execution **on_message_market_message(m_m)** callback is fired.
+
+        **m_m** : The market message.
+
         :param exchange: The exchange(required)
         """
         str_message = {}
@@ -481,6 +593,12 @@ class GfeedClient(object):
 
     def get_exchange_message(self, exchange):
         """
+        Call this method to get the exchange message for the given exchange.
+
+        On successful execution **on_message_exchange_message(e_m)** callback is fired.
+
+        **e_m** : The exchange message.
+
         :param exchange: The exchange(required)
         """
         str_message = {}
@@ -491,6 +609,12 @@ class GfeedClient(object):
 
     def subscribe_realtime(self, exchange, instrument_identifier, unsubscribe=False):
         """
+        Call this method to subscribe to real time data for the given exchange and given instrument.
+
+        On successful execution **on_message_realtime_data(r_r)** callback is fired.
+
+        **r_r** : The real time data.
+
         :param exchange: The exchange(required)
         :param instrument_identifier: The instrument identifier(required)
         :param unsubscribe: Pass True to unsubscribe(optional)
@@ -506,6 +630,12 @@ class GfeedClient(object):
 
     def subscribe_realtime_snapshot(self, exchange, instrument_identifier, periodicity, unsubscribe=False):
         """
+        Call this method to subscribe to real time snapshot data for the given exchange, given instrument and given periodicity.
+
+        On successful execution **on_message_realtime_snapshot_data(r_r)** callback is fired.
+
+        **r_r** : The real time snapshot data.
+
         :param exchange: The exchange(required)
         :param instrument_identifier: The instrument identifier(required)
         :param periodicity: The periodicity.Valid value is either "MINUTE" or "HOUR"(required).
@@ -520,11 +650,9 @@ class GfeedClient(object):
             str_message["Unsubscribe"] = unsubscribe
         payload = (json.dumps(str_message)).encode('utf8')
         self.base_client.sendMessage(payload, isBinary=False)
-        print(str_message)
 
     def _on_connect(self, base_client, response):
             self.base_client = base_client
-            print("Base client assigned")
             if self.on_connect:
                 self.on_connect(self, response)
 
@@ -533,7 +661,7 @@ class GfeedClient(object):
 
     def _on_close(self, base_client, code, reason):
         if self.on_close:
-            self.on_close(self, code, reason)
+            self.on_close(base_client, code, reason)
 
     def _on_error(self, base_client, code, reason):
         if self.on_error:
@@ -541,7 +669,15 @@ class GfeedClient(object):
 
     def _on_reconnect(self, attempts_count):
         if self.on_reconnect:
-            return self.on_reconnect(self, attempts_count)
+            self.on_reconnect(self, attempts_count)
+
+    def _on_reconnect_max_tries(self):
+        if self.on_reconnection_max_tries:
+            self.on_reconnection_max_tries()
+
+    def  _on_disconnect(self):
+        if self.on_disconnect:
+            self.on_disconnect(self)
 
     def _on_authenticated(self):
         if self.on_authenticated:

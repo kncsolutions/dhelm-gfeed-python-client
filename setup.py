@@ -10,7 +10,7 @@ with open("README.md", "r") as f:
     long_description = f.read()
 
 name = 'DhelmGfeedClient'
-version = '1.0.0'
+version = '1.0.1'
 release = '1.0.0'
 copyright = '2018, KNC Solutions Private Limited.'
 setup(
@@ -20,6 +20,16 @@ setup(
     cmdclass=cmdclass,
     url='https://github.com/kncsolutions/dhelm-gfeed-python-client',
     license='Apache License, Version 2.0',
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: End Users/Desktop',
+        'Intended Audience :: Developers',
+        "Topic :: Office/Business :: Financial :: Investment",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        'Programming Language :: Python :: 3.4',
+        "Operating System :: OS Independent",
+        "License :: OSI Approved :: Apache Software License",
+    ],
     author='Pallav Nandi Chaudhuri',
     author_email='developer@kncsolutions.in',
     description='This is a python client for websocket APIs provided by Global Financial Datafeeds LLP to access financial data.',
@@ -30,6 +40,10 @@ setup(
     ],
     extras_require={
         "doc": ["Sphinx"],
+    },
+     project_urls={  # Optional
+        'Bug Reports': 'https://github.com/kncsolutions/dhelm-gfeed-python-client/issues',
+        'Source': 'https://github.com/kncsolutions/dhelm-gfeed-python-client',
     },
     command_options={
         'build_sphinx': {

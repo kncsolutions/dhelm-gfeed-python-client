@@ -20,8 +20,8 @@ sys.path.insert(0, os.path.abspath('../DhelmGfeedClient'))
 # -- Project information -----------------------------------------------------
 
 project = 'DhelmGfeedClient'
-copyright = '2018, Pallav'
-author = 'Pallav'
+copyright = '2018, KNC Solutions Private Limited'
+author = 'Pallav Nandi Chaudhuri'
 
 # The short X.Y version
 version = ''
@@ -83,7 +83,9 @@ html_theme = 'classic'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-#html_theme_options = {}
+html_theme_options = {
+    "stickysidebar" : "true" 
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>DhelmGfeedClient package &#8212; DhelmGfeedClient 1.0.0 documentation</title>
+    <title>DhelmGfeedClient package &#8212; DhelmGfeedClient 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -29,7 +29,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DhelmGfeedClient 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">DhelmGfeedClient 0.0.1 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -40,11 +40,14 @@
             
   <div class="section" id="dhelmgfeedclient-package">
 <h1>DhelmGfeedClient package<a class="headerlink" href="#dhelmgfeedclient-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="module-DhelmGfeedClient.constants">
 <span id="dhelmgfeedclient-constants-module"></span><h2>DhelmGfeedClient.constants module<a class="headerlink" href="#module-DhelmGfeedClient.constants" title="Permalink to this headline">¶</a></h2>
+<p><strong>constants.py</strong></p>
+<ul class="simple">
+<li>Copyright (c) 2018, KNC Solutions Private Limited.</li>
+<li>License: ‘Apache License, Version 2.0’.</li>
+<li>version: 1.0.0</li>
+</ul>
 <dl class="class">
 <dt id="DhelmGfeedClient.constants.Constants">
 <em class="property">class </em><code class="descclassname">DhelmGfeedClient.constants.</code><code class="descname">Constants</code><a class="headerlink" href="#DhelmGfeedClient.constants.Constants" title="Permalink to this definition">¶</a></dt>
@@ -294,11 +297,26 @@
 </div>
 <div class="section" id="module-DhelmGfeedClient.gfeedclient">
 <span id="dhelmgfeedclient-gfeedclient-module"></span><h2>DhelmGfeedClient.gfeedclient module<a class="headerlink" href="#module-DhelmGfeedClient.gfeedclient" title="Permalink to this headline">¶</a></h2>
+<p><strong>gfeedclient.py</strong></p>
+<ul class="simple">
+<li>Copyright (c) 2018, KNC Solutions Private Limited.</li>
+<li>License: ‘Apache License, Version 2.0’.</li>
+<li>version: 1.0.0</li>
+</ul>
 <dl class="class">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient">
 <em class="property">class </em><code class="descclassname">DhelmGfeedClient.gfeedclient.</code><code class="descname">GfeedClient</code><span class="sig-paren">(</span><em>ws_url</em>, <em>api_key</em>, <em>debug=False</em>, <em>max_retries=30</em>, <em>max_delay=5000</em>, <em>connect_timeout=30</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>The  client to connect to Global datafeed websocket data.</p>
+<ul class="simple">
+<li><strong>ws_url</strong>: The web socket url.(required)</li>
+<li><strong>param api_key</strong>: Your api  key.(required)</li>
+<li><strong>param debug</strong>: By default false. Set true to run in debug mode.(optional)</li>
+<li><strong>param reconnect</strong>: By default true. Set false to off auto reconnection.(optional)</li>
+<li><strong>param reconnect_max_tries</strong>: Maximum no of retries.(optional)</li>
+<li><strong>param reconnect_max_delay</strong>: Maximum delay.(optional)</li>
+<li><strong>param connect_timeout</strong>: Connection delay.(optional)</li>
+</ul>
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.connect">
 <code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.connect" title="Permalink to this definition">¶</a></dt>
@@ -309,14 +327,18 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.disconnect">
-<code class="descname">disconnect</code><span class="sig-paren">(</span><em>code=None</em>, <em>reason=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.disconnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close the WebSocket connection.</p>
+<code class="descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call this method to disconnect the client.</p>
+<p>On disconnection <strong>on_close(base_client, code, reason)</strong> callback is fired.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_exchange_message">
 <code class="descname">get_exchange_message</code><span class="sig-paren">(</span><em>exchange</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_exchange_message" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the exchange message for the given exchange.</p>
+<p>On successful execution <strong>on_message_exchange_message(e_m)</strong> callback is fired.</p>
+<p><strong>e_m</strong> : The exchange message.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -330,12 +352,17 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_exchanges">
 <code class="descname">get_exchanges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_exchanges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call this method to get the list of subscribed exchanges.</p>
+<p>On successful execution <strong>on_message_get_exchanges(list_exchanges)</strong> callback is fired.</p>
+<p><strong>list_exchanges</strong> : The list of subscribed exchanges.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_expiry_dates">
 <code class="descname">get_expiry_dates</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_type=None</em>, <em>product=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_expiry_dates" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the list of expiry dates of different contracts for an exchange.</p>
+<p>On successful execution <strong>on_message_expiry_dates(e_dates)</strong> callback is fired.</p>
+<p><strong>e_dates</strong> : The list of expiry dates.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -353,7 +380,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_historical_ohlc_data">
 <code class="descname">get_historical_ohlc_data</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_identifier</em>, <em>periodicity</em>, <em>from_timestamp</em>, <em>to_timestamp</em>, <em>max_no=0</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_historical_ohlc_data" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get historical ohlc data of the given instruments.</p>
+<p>On successful execution <strong>on_message_historical_ohlc_data(h_ohlc_d)</strong> callback is fired.</p>
+<p><strong>h_ohlc_d</strong> : The historical tick data  of the given instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -374,7 +404,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_historical_tick_data">
 <code class="descname">get_historical_tick_data</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_identifier</em>, <em>max_no=0</em>, <em>from_timestamp=None</em>, <em>to_timestamp=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_historical_tick_data" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get historical tick data of the given instruments.</p>
+<p>On successful execution <strong>on_message_historical_tick_data(h_t_d)</strong> callback is fired.</p>
+<p><strong>h_t_d</strong> : The historical tick data  of the given instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -394,7 +427,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_instrument_types">
 <code class="descname">get_instrument_types</code><span class="sig-paren">(</span><em>exchange</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_instrument_types" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the list of instrument types available for an exchange.</p>
+<p>On successful execution <strong>on_message_instrument_types(i_types)</strong> callback is fired.</p>
+<p><strong>i_types</strong> : The list of instrument types.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -407,7 +443,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_instruments">
 <code class="descname">get_instruments</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_type=None</em>, <em>product=None</em>, <em>expiry=None</em>, <em>option_type=None</em>, <em>strike_price=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_instruments" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the list of instruments from an exchange.</p>
+<p>On successful execution <strong>on_message_instruments(list_instruments)</strong> callback is fired.</p>
+<p><strong>list_instruments</strong> : The list of instruments.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -428,17 +467,17 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_instruments_on_search">
 <code class="descname">get_instruments_on_search</code><span class="sig-paren">(</span><em>exchange</em>, <em>key_word</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_instruments_on_search" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the list of instruments using search key word.</p>
+<p>On successful execution <strong>on_message_instruments_on_search(list_instruments)</strong> callback is fired.</p>
+<p><strong>list_instruments</strong> : The list of instruments matching the search word.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>exchange</strong> – The exchange(required)</li>
 <li><strong>key_word</strong> – The search word(required).</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
 </td>
 </tr>
 </tbody>
@@ -448,7 +487,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_last_quote">
 <code class="descname">get_last_quote</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_identifier</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_last_quote" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the last quote of an instrument.</p>
+<p>On successful execution <strong>on_message_last_quote(l_quote)</strong> callback is fired.</p>
+<p><strong>l_quote</strong> : The last quote of the given instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -465,7 +507,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_last_quotes_array">
 <code class="descname">get_last_quotes_array</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_identifiers</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_last_quotes_array" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the last quotes of given instruments.</p>
+<p>On successful execution <strong>on_message_last_quote_array(l_quote_array)</strong> callback is fired.</p>
+<p><strong>l_quote_array</strong> : The last quotes of the given instruments.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -485,13 +530,18 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_limitations">
 <code class="descname">get_limitations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_limitations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get account information.</p>
+<dd><p>Call this method to get your account details and limitations.</p>
+<p>On successful execution <strong>on_message_account_limitations(a_limit)</strong> callback is fired.</p>
+<p><strong>a_limit</strong> : Account details and limitations.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_market_message">
 <code class="descname">get_market_message</code><span class="sig-paren">(</span><em>exchange</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_market_message" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the market message for the given exchange.</p>
+<p>On successful execution <strong>on_message_market_message(m_m)</strong> callback is fired.</p>
+<p><strong>m_m</strong> : The market message.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -504,7 +554,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_option_types">
 <code class="descname">get_option_types</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_type=None</em>, <em>product=None</em>, <em>expiry=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_option_types" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the list of option types available for different contracts for an exchange.</p>
+<p>On successful execution <strong>on_message_option_types(o_types)</strong> callback is fired.</p>
+<p><strong>o_types</strong> : The list of option types.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -523,7 +576,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_products">
 <code class="descname">get_products</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_type=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_products" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the list of products available for an exchange.</p>
+<p>On successful execution <strong>on_message_product(p)</strong> callback is fired.</p>
+<p><strong>p</strong> : The list of products.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -540,7 +596,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_snapshot">
 <code class="descname">get_snapshot</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_identifiers</em>, <em>periodicity='MINUTE'</em>, <em>period=1</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the snapshot quotes of given instruments.</p>
+<p>On successful execution <strong>on_message_snapshot_data(s_data)</strong> callback is fired.</p>
+<p><strong>l_data</strong> : The snapshot quotes of the given instruments.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -559,7 +618,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.get_strike_prices">
 <code class="descname">get_strike_prices</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_type=None</em>, <em>product=None</em>, <em>expiry=None</em>, <em>option_type=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.get_strike_prices" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to get the list of strike prices for different contracts for an exchange.</p>
+<p>On successful execution <strong>on_message_strike_prices(s_prices)</strong> callback is fired.</p>
+<p><strong>s_prices</strong> : The list of strike prices.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -585,7 +647,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.subscribe_realtime">
 <code class="descname">subscribe_realtime</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_identifier</em>, <em>unsubscribe=False</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.subscribe_realtime" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to subscribe to real time data for the given exchange and given instrument.</p>
+<p>On successful execution <strong>on_message_realtime_data(r_r)</strong> callback is fired.</p>
+<p><strong>r_r</strong> : The real time data.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -603,7 +668,10 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 <dl class="method">
 <dt id="DhelmGfeedClient.gfeedclient.GfeedClient.subscribe_realtime_snapshot">
 <code class="descname">subscribe_realtime_snapshot</code><span class="sig-paren">(</span><em>exchange</em>, <em>instrument_identifier</em>, <em>periodicity</em>, <em>unsubscribe=False</em><span class="sig-paren">)</span><a class="headerlink" href="#DhelmGfeedClient.gfeedclient.GfeedClient.subscribe_realtime_snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Call this method to subscribe to real time snapshot data for the given exchange, given instrument and given periodicity.</p>
+<p>On successful execution <strong>on_message_realtime_snapshot_data(r_r)</strong> callback is fired.</p>
+<p><strong>r_r</strong> : The real time snapshot data.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -622,9 +690,6 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
 </dd></dl>
 
 </div>
-<div class="section" id="module-DhelmGfeedClient">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-DhelmGfeedClient" title="Permalink to this headline">¶</a></h2>
-</div>
 </div>
 
 
@@ -636,10 +701,8 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">DhelmGfeedClient package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-DhelmGfeedClient.constants">DhelmGfeedClient.constants module</a></li>
 <li><a class="reference internal" href="#module-DhelmGfeedClient.gfeedclient">DhelmGfeedClient.gfeedclient module</a></li>
-<li><a class="reference internal" href="#module-DhelmGfeedClient">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -676,7 +739,7 @@ The <code class="docutils literal notranslate"><span class="pre">base_client</sp
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">DhelmGfeedClient 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">DhelmGfeedClient 0.0.1 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

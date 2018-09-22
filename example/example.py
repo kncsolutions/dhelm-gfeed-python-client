@@ -1,10 +1,11 @@
 from DhelmGfeedClient.gfeedclient import GfeedClient
 from DhelmGfeedClient.constants import Constants
+import sys
 import json
 import time
 import datetime
 
-client = GfeedClient("ws://nimblestream.lisuns.com:4526/","f31b6d7d-0138-428d-93ef-28acbd9632d2")
+client = GfeedClient(sys.argv[1], sys.argv[2])
 
 
 def on_authenticated(base_client):
@@ -28,6 +29,7 @@ def on_authenticated(base_client):
     base_client.get_historical_ohlc_data("NSE", "SBIN", Constants.HOUR,
                                 int(time.mktime((datetime.datetime(2018, 9, 13)).timetuple())),
                                 int(time.mktime((datetime.datetime.now()).timetuple())), 10)
+    #base_client.disconnect()
 
 
 def on_message_get_exchanges(list_exchanages):
@@ -122,6 +124,14 @@ def on_message_historical_ohlc_data(historical_ohlc_data):
     print("\n*********HISTORICAL OHLC DATA*************\n")
     print(historical_ohlc_data)
 
+def on_reconnect(count):
+    print("\n+++++++Reconnected+++++++++\n")
+
+def on_reconnection_max_tries():
+    print("+++MAX RECONNECT ATTEMPTS MADE++++")
+
+def on_close(base_client, code, reason):
+    print("\n+++++++SUCCESFULLY DISCONNCTED+++++++++\n")
 
 client.on_authenticated = on_authenticated
 client.on_message_get_exchanges = on_message_get_exchanges
@@ -142,4 +152,8 @@ client.on_message_market_message = on_message_market_message
 client.on_message_exchange_message = on_message_exchange_message
 client.on_message_realtime_data = on_message_realtime_data
 client.on_message_realtime_snapshot_data = on_message_realtime_snapshot_data
+client.on_close = on_close
+client.on_reconnect = on_reconnect
+client.on_reconnection_max_tries = on_reconnection_max_tries
+
 client.connect()
