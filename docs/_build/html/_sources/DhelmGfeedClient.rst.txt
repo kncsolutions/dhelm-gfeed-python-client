@@ -1,6 +1,8 @@
 DhelmGfeedClient package
 ========================
 
+Submodules
+----------
 
 DhelmGfeedClient.constants module
 ---------------------------------
@@ -19,3 +21,10 @@ DhelmGfeedClient.gfeedclient module
     :show-inheritance:
 
 
+Module contents
+---------------
+
+.. automodule:: DhelmGfeedClient
+    :members:
+    :undoc-members:
+    :show-inheritance:

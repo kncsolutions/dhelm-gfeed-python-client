@@ -30,6 +30,11 @@ Install from Sources
 2. cd to dhelm-gfeed-python-client
 3. python setup.py install
 
+Installation using pip
+----------------------
+
+pip install DhelmGfeedClient
+
 Methods and Callbacks
 =====================
 
