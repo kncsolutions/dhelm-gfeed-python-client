@@ -65,7 +65,7 @@ Open the terminal and type:
 
 .. sourcecode:: python
 
- py test.py <ws_url> <api_key>
+ py example.py <ws_url> <api_key>
 
 Replace <ws_url> with the web socket url and <api_key> with your api key.
 
