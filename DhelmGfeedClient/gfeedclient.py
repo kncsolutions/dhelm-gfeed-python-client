@@ -4,7 +4,7 @@
 
     - Copyright (c) 2018, KNC Solutions Private Limited.
     - License: 'Apache License, Version 2.0'.
-    - version: 1.0.0
+    - version: 1.0.1
 """
 from twisted.python import log
 from autobahn.twisted.websocket import WebSocketClientProtocol
@@ -83,6 +83,7 @@ class _GfeedClientFactory(WebSocketClientFactory, ReconnectingClientFactory):
         self.on_message_exchange_message = None
         self.on_message_realtime_data = None
         self.on_message_realtime_snapshot_data = None
+       
 
         WebSocketClientFactory.__init__(self, *args, **kwargs)
 
@@ -169,6 +170,7 @@ class GfeedClient(object):
         self.on_message_exchange_message = None
         self.on_message_realtime_data = None
         self.on_message_realtime_snapshot_data = None
+       
 
         # Variables containing response
         self.subscribe_exchanges = Constants.RESULT_NOT_PREPARED
@@ -226,6 +228,7 @@ class GfeedClient(object):
         self.factory.on_message_exchange_message = self._on_message_exchange_message
         self.factory.on_message_realtime_data = self._on_message_realtime_data
         self.factory.on_message_realtime_snapshot_data = self._on_message_realtime_snapshot_data
+        
         if self.max_retries > 0:
             self.factory.maxRetries = self.max_retries
         if self.max_delay > 0:
@@ -650,6 +653,7 @@ class GfeedClient(object):
             str_message["Unsubscribe"] = unsubscribe
         payload = (json.dumps(str_message)).encode('utf8')
         self.base_client.sendMessage(payload, isBinary=False)
+    
 
     def _on_connect(self, base_client, response):
             self.base_client = base_client
@@ -671,7 +675,7 @@ class GfeedClient(object):
         if self.on_reconnect:
             self.on_reconnect(self, attempts_count)
 
-    def _on_reconnect_max_tries(self):
+    def _on_reconnection_max_tries(self):
         if self.on_reconnection_max_tries:
             self.on_reconnection_max_tries()
 
@@ -754,6 +758,7 @@ class GfeedClient(object):
     def _on_message_realtime_snapshot_data(self, r_r):
         if self.on_message_realtime_snapshot_data:
             self.on_message_realtime_snapshot_data(r_r)
+
 
     def _on_message(self,base_client, payload, isBinary):
         """on message"""

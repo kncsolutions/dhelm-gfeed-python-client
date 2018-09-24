@@ -6,12 +6,12 @@ from sphinx.setup_command import BuildDoc
 cmdclass = {'build_sphinx': BuildDoc}
 
 here = path.abspath(path.dirname(__file__))
-with open("README.md", "r") as f:
+with open("README.rst", "r") as f:
     long_description = f.read()
 
 name = 'DhelmGfeedClient'
 version = '1.0.1'
-release = '1.0.0'
+release = '1.0.1'
 copyright = '2018, KNC Solutions Private Limited.'
 setup(
     name=name,

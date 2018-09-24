@@ -4,7 +4,7 @@
 
     - Copyright (c) 2018, KNC Solutions Private Limited.
     - License: 'Apache License, Version 2.0'.
-    - version: 1.0.0
+    - version: 1.0.1
 """
 
 class Constants:

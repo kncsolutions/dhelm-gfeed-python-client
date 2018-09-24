@@ -124,14 +124,19 @@ def on_message_historical_ohlc_data(historical_ohlc_data):
     print("\n*********HISTORICAL OHLC DATA*************\n")
     print(historical_ohlc_data)
 
+
+
 def on_reconnect(count):
     print("\n+++++++Reconnected+++++++++\n")
+
 
 def on_reconnection_max_tries():
     print("+++MAX RECONNECT ATTEMPTS MADE++++")
 
+
 def on_close(base_client, code, reason):
     print("\n+++++++SUCCESFULLY DISCONNCTED+++++++++\n")
+
 
 client.on_authenticated = on_authenticated
 client.on_message_get_exchanges = on_message_get_exchanges

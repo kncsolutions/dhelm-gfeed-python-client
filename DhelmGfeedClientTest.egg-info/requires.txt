@@ -1,0 +1,4 @@
+autobahn[twisted]>=18.9.2
+
+[doc]
+Sphinx
