@@ -8,7 +8,7 @@ To use this library you must `subscribe <https://globaldatafeeds.in/api/>`_ to w
 
 Using Dhelm-gfeed-python-client you can plug data from web socket api into your  application directly.
 
-For detailed integration and usage guidelines, please read through the `documentation <https://kncsolutions.github.io/site/gfeedpythonapi/docs/_build/html/>`_.
+For detailed integration and usage guidelines, please read through the `documentation <https://kncsolutions.github.io/site/gfeedpythonapi/docs1/_build/html/>`_.
 
 Version
 -------
