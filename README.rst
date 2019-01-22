@@ -10,6 +10,10 @@ Using Dhelm-gfeed-python-client you can plug data from web socket api into your 
 
 For detailed integration and usage guidelines, please read through the `documentation <https://kncsolutions.github.io/site/gfeedpythonapi/docs/_build/html/>`_.
 
+Version
+-------
+1.0.3
+
 Installation
 ------------
 The client is tested with python 3.4+.
@@ -28,8 +32,9 @@ Installation using pip
 
 .. sourcecode:: python
 
- pip install DhelmGfeedClient
+ pip install --upgrade DhelmGfeedClient
 
+[NB: If you have been using version 1.0.2 you can find the source in 1.0.2 branch. For the updates made in version 1.0.3 see the changelog.]
 
 Getting started with the client
 -------------------------------

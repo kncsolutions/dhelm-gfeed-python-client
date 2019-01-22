@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Dhelm-gfeed-python-client’s documentation! &#8212; DhelmGfeedClient 1.0.0 documentation</title>
+    <title>Dhelm-gfeed-python-client’s documentation! &#8212; DhelmGfeedClient 1.0.3 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -28,7 +28,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 1.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -112,8 +112,9 @@ The <strong>base_client</strong> is the currently initialised WebSocket object.<
 <div class="section" id="def-get-instruments-on-search-self-exchange-key-word">
 <h3><strong>def get_instruments_on_search(self, exchange, key_word)</strong><a class="headerlink" href="#def-get-instruments-on-search-self-exchange-key-word" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the list of instruments using search key word.</p>
-<p>On successful execution <strong>on_message_instruments_on_search(list_instruments)</strong> callback is fired.
-<strong>list_instruments</strong> : The list of instruments matching the search word.</p>
+<p>On successful execution <strong>on_message_instruments_on_search(base_client,list_instruments)</strong> callback is fired.
+<strong>list_instruments</strong> : The list of instruments matching the search word.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="nt">&quot;Request&quot;</span><span class="p">:{</span>
@@ -133,8 +134,9 @@ The <strong>base_client</strong> is the currently initialised WebSocket object.<
 <div class="section" id="def-get-instruments-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none-strike-price-none">
 <h3><strong>def get_instruments(self, exchange, instrument_type=None, product=None, expiry=None,option_type=None,strike_price=None)</strong><a class="headerlink" href="#def-get-instruments-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none-strike-price-none" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the list of instruments from an exchange.</p>
-<p>On successful execution <strong>on_message_instruments(list_instruments)</strong> callback is fired.</p>
-<p><strong>list_instruments</strong> : The list of instruments.</p>
+<p>On successful execution <strong>on_message_instruments(base_client,list_instruments)</strong> callback is fired.</p>
+<p><strong>list_instruments</strong> : The list of instruments.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
 &quot;Request&quot;:{
@@ -155,8 +157,9 @@ The <strong>base_client</strong> is the currently initialised WebSocket object.<
 <div class="section" id="def-get-last-quote-self-exchange-instrument-identifier">
 <h3><strong>def get_last_quote(self, exchange, instrument_identifier)</strong><a class="headerlink" href="#def-get-last-quote-self-exchange-instrument-identifier" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the last quote of an instrument.</p>
-<p>On successful execution <strong>on_message_last_quote(l_quote)</strong> callback is fired.</p>
-<p><strong>l_quote</strong> : The last quote of the given instrument.</p>
+<p>On successful execution <strong>on_message_last_quote(base_client,l_quote)</strong> callback is fired.</p>
+<p><strong>l_quote</strong> : The last quote of the given instrument.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span>
@@ -186,8 +189,9 @@ The <strong>base_client</strong> is the currently initialised WebSocket object.<
 <div class="section" id="def-get-last-quote-array-self-exchange-instrument-identifiers">
 <h3><strong>def get_last_quote_array(self, exchange, instrument_identifiers)</strong><a class="headerlink" href="#def-get-last-quote-array-self-exchange-instrument-identifiers" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the last quotes of given instruments.</p>
-<p>On successful execution <strong>on_message_last_quote_array(l_quote_array)</strong> callback is fired.</p>
-<p><strong>l_quote_array</strong> : The last quotes of the given instruments.</p>
+<p>On successful execution <strong>on_message_last_quote_array(base_client,l_quote_array)</strong> callback is fired.</p>
+<p><strong>l_quote_array</strong> : The last quotes of the given instruments.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
 &quot;Result&quot;:[
@@ -220,8 +224,9 @@ eOpen&quot;:false,&quot;MessageType&quot;:&quot;LastQuoteResult&quot;}],
 <div class="section" id="def-get-snapshot-self-exchange-instrument-identifiers-periodicity-constants-minute-period-1">
 <h3><strong>def get_snapshot(self, exchange, instrument_identifiers, periodicity=Constants.MINUTE, period=1)</strong><a class="headerlink" href="#def-get-snapshot-self-exchange-instrument-identifiers-periodicity-constants-minute-period-1" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the snapshot quotes of given instruments.</p>
-<p>On successful execution <strong>on_message_snapshot_data(s_data)</strong> callback is fired.</p>
-<p><strong>l_data</strong> : The snapshot quotes of the given instruments.</p>
+<p>On successful execution <strong>on_message_snapshot_data(base_client,s_data)</strong> callback is fired.</p>
+<p><strong>l_data</strong> : The snapshot quotes of the given instruments.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="nt">&quot;Result&quot;</span><span class="p">:[</span>
@@ -245,8 +250,9 @@ eOpen&quot;:false,&quot;MessageType&quot;:&quot;LastQuoteResult&quot;}],
 <div class="section" id="def-get-historical-tick-data-self-exchange-instrument-identifier-max-no-0-from-timestamp-none-to-timestamp-none">
 <h3><strong>def get_historical_tick_data(self,  exchange, instrument_identifier,max_no=0, from_timestamp=None, to_timestamp=None)</strong><a class="headerlink" href="#def-get-historical-tick-data-self-exchange-instrument-identifier-max-no-0-from-timestamp-none-to-timestamp-none" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get historical tick data of the given instruments.</p>
-<p>On successful execution <strong>on_message_historical_tick_data(h_t_d)</strong> callback is fired.</p>
-<p><strong>h_t_d</strong> : The historical tick data  of the given instrument.</p>
+<p>On successful execution <strong>on_message_historical_tick_data(base_client,h_t_d)</strong> callback is fired.</p>
+<p><strong>h_t_d</strong> : The historical tick data  of the given instrument.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
 &quot;Result&quot;:[
@@ -270,8 +276,9 @@ rice&quot;:298.1,&quot;BuyQty&quot;:2980,&quot;SellPrice&quot;:298.45,&quot;Sell
 <div class="section" id="get-historical-ohlc-data-self-exchange-instrument-identifier-periodicity-from-timestamp-to-timestamp-max-no-0">
 <h3><strong>get_historical_ohlc_data(self, exchange, instrument_identifier, periodicity,from_timestamp, to_timestamp, max_no=0)</strong><a class="headerlink" href="#get-historical-ohlc-data-self-exchange-instrument-identifier-periodicity-from-timestamp-to-timestamp-max-no-0" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get historical ohlc data of the given instruments.</p>
-<p>On successful execution <strong>on_message_historical_ohlc_data(h_ohlc_d)</strong> callback is fired.</p>
-<p><strong>h_ohlc_d</strong> : The historical tick data  of the given instrument.</p>
+<p>On successful execution <strong>on_message_historical_ohlc_data(base_client,h_ohlc_d)</strong> callback is fired.</p>
+<p><strong>h_ohlc_d</strong> : The historical tick data  of the given instrument.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NSE&quot;</span><span class="p">,</span><span class="nt">&quot;InstrumentIdentifier&quot;</span><span class="p">:</span><span class="s2">&quot;SBIN&quot;</span><span class="p">,</span><span class="nt">&quot;From&quot;</span><span class="p">:</span><span class="mi">1536019200</span><span class="p">,</span><span class="nt">&quot;To</span>
 <span class="nt">&quot;</span><span class="p">:</span><span class="mi">1536477902</span><span class="p">,</span><span class="nt">&quot;Max&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;Periodicity&quot;</span><span class="p">:</span><span class="s2">&quot;DAY&quot;</span><span class="p">,</span><span class="nt">&quot;Period&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetHistory&quot;</span><span class="p">},</span>
@@ -297,8 +304,9 @@ rice&quot;:298.1,&quot;BuyQty&quot;:2980,&quot;SellPrice&quot;:298.45,&quot;Sell
 <div class="section" id="def-get-instrument-types-self-exchange">
 <h3><strong>def get_instrument_types(self, exchange)</strong><a class="headerlink" href="#def-get-instrument-types-self-exchange" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the list of instrument types available for an exchange.</p>
-<p>On successful execution <strong>on_message_instrument_types(i_types)</strong> callback is fired.</p>
-<p><strong>i_types</strong> : The list of instrument types.</p>
+<p>On successful execution <strong>on_message_instrument_types(base_client,i_types)</strong> callback is fired.</p>
+<p><strong>i_types</strong> : The list of instrument types.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetInstrumentTypes&quot;</span><span class="p">},</span>
 <span class="nt">&quot;Result&quot;</span><span class="p">:[</span>
@@ -314,8 +322,9 @@ rice&quot;:298.1,&quot;BuyQty&quot;:2980,&quot;SellPrice&quot;:298.45,&quot;Sell
 <div class="section" id="def-get-products-self-exchange-instrument-type-none">
 <h3><strong>def get_products(self, exchange, instrument_type=None)</strong><a class="headerlink" href="#def-get-products-self-exchange-instrument-type-none" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the list of products available for an exchange.</p>
-<p>On successful execution <strong>on_message_product(p)</strong> callback is fired.</p>
-<p><strong>p</strong> : The list of products.</p>
+<p>On successful execution <strong>on_message_product(base_client,p)</strong> callback is fired.</p>
+<p><strong>p</strong> : The list of products.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;Request&quot;:{&quot;Exchange&quot;:&quot;NFO&quot;,&quot;MessageType&quot;:&quot;GetProducts&quot;},
 &quot;Result&quot;:[
@@ -331,8 +340,9 @@ alue&quot;:&quot;INDIAVIX&quot;},{&quot;Value&quot;:&quot;ACC&quot;},
 <div class="section" id="def-get-expiry-dates-self-exchange-instrument-type-none-product-none">
 <h3><strong>def get_expiry_dates(self, exchange, instrument_type=None, product=None)</strong><a class="headerlink" href="#def-get-expiry-dates-self-exchange-instrument-type-none-product-none" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the list of expiry dates of different contracts for an exchange.</p>
-<p>On successful execution <strong>on_message_expiry_dates(e_dates)</strong> callback is fired.</p>
-<p><strong>e_dates</strong> : The list of expiry dates.</p>
+<p>On successful execution <strong>on_message_expiry_dates(base_client,e_dates)</strong> callback is fired.</p>
+<p><strong>e_dates</strong> : The list of expiry dates.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span><span class="nt">&quot;InstrumentType&quot;</span><span class="p">:</span><span class="s2">&quot;FUTIDX&quot;</span><span class="p">,</span><span class="nt">&quot;Product&quot;</span><span class="p">:</span><span class="s2">&quot;BANKNIFTY&quot;</span><span class="p">,</span><span class="nt">&quot;Me</span>
 <span class="nt">ssageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetExpiryDates&quot;</span><span class="p">},</span>
@@ -344,8 +354,9 @@ alue&quot;:&quot;INDIAVIX&quot;},{&quot;Value&quot;:&quot;ACC&quot;},
 <div class="section" id="def-get-option-types-self-exchange-instrument-type-none-product-none-expiry-none">
 <h3><strong>def get_option_types(self, exchange, instrument_type=None, product=None , expiry=None)</strong><a class="headerlink" href="#def-get-option-types-self-exchange-instrument-type-none-product-none-expiry-none" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the list of option types available for different contracts for an exchange.</p>
-<p>On successful execution <strong>on_message_option_types(o_types)</strong> callback is fired.</p>
-<p><strong>o_types</strong> : The list of option types.</p>
+<p>On successful execution <strong>on_message_option_types(base_client,o_types)</strong> callback is fired.</p>
+<p><strong>o_types</strong> : The list of option types.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span><span class="nt">&quot;InstrumentType&quot;</span><span class="p">:</span><span class="s2">&quot;FUTIDX&quot;</span><span class="p">,</span><span class="nt">&quot;Product&quot;</span><span class="p">:</span><span class="s2">&quot;BANKNIFTY&quot;</span><span class="p">,</span><span class="nt">&quot;Ex</span>
 <span class="nt">piry&quot;</span><span class="p">:</span><span class="s2">&quot;25OCT2018&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetOptionTypes&quot;</span><span class="p">},</span><span class="nt">&quot;Result&quot;</span><span class="p">:[{</span><span class="nt">&quot;Value&quot;</span><span class="p">:</span><span class="s2">&quot;FF&quot;</span><span class="p">},{</span><span class="nt">&quot;Val</span>
@@ -356,8 +367,9 @@ alue&quot;:&quot;INDIAVIX&quot;},{&quot;Value&quot;:&quot;ACC&quot;},
 <div class="section" id="def-get-strike-prices-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none">
 <h3><strong>def get_strike_prices(self, exchange, instrument_type=None, product=None, expiry=None, option_type=None)</strong><a class="headerlink" href="#def-get-strike-prices-self-exchange-instrument-type-none-product-none-expiry-none-option-type-none" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the list of strike prices for different contracts for an exchange.</p>
-<p>On successful execution <strong>on_message_strike_prices(s_prices)</strong> callback is fired.</p>
-<p><strong>s_prices</strong> : The list of strike prices.</p>
+<p>On successful execution <strong>on_message_strike_prices(base_client,s_prices)</strong> callback is fired.</p>
+<p><strong>s_prices</strong> : The list of strike prices.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;Request&quot;:{&quot;Exchange&quot;:&quot;NFO&quot;,&quot;MessageType&quot;:&quot;GetStrikePrices&quot;},&quot;Result&quot;:[{&quot;Value&quot;
 :&quot;0&quot;},{&quot;Value&quot;:&quot;25800&quot;},{&quot;Value&quot;:&quot;25900&quot;},{&quot;Value&quot;:&quot;26000&quot;},{&quot;Value&quot;:&quot;26100&quot;},{&quot;
@@ -371,8 +383,9 @@ Value&quot;:&quot;26200&quot;},{&quot;Value&quot;:&quot;26300&quot;},{&quot;Valu
 <div class="section" id="def-get-limitations-self">
 <h3><strong>def get_limitations(self)</strong><a class="headerlink" href="#def-get-limitations-self" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get your account details and limitations.</p>
-<p>On successful execution <strong>on_message_account_limitations(a_limit)</strong> callback is fired.</p>
-<p><strong>a_limit</strong> : Account details and limitations.</p>
+<p>On successful execution <strong>on_message_account_limitations(base_client,a_limit)</strong> callback is fired.</p>
+<p><strong>a_limit</strong> : Account details and limitations.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;GeneralParams&quot;:{&quot;AllowedBandwidthPerHour&quot;:-1.0,&quot;AllowedCallsPerHour&quot;:7200,&quot;All
 owedCallsPerMonth&quot;:5356800,&quot;AllowedBandwidthPerMonth&quot;:-1.0,&quot;ExpirationDate&quot;:1538
@@ -405,8 +418,9 @@ bled&quot;:true,&quot;MaxTicks&quot;:2},
 <div class="section" id="def-get-market-message-self-exchange">
 <h3><strong>def get_market_message(self, exchange)</strong><a class="headerlink" href="#def-get-market-message-self-exchange" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the market message for the given exchange.</p>
-<p>On successful execution <strong>on_message_market_message(m_m)</strong> callback is fired.</p>
-<p><strong>m_m</strong> : The market message.</p>
+<p>On successful execution <strong>on_message_market_message(base_client,m_m)</strong> callback is fired.</p>
+<p><strong>m_m</strong> : The market message.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Request&quot;</span><span class="p">:{</span><span class="nt">&quot;Exchange&quot;</span><span class="p">:</span><span class="s2">&quot;NFO&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType&quot;</span><span class="p">:</span><span class="s2">&quot;GetMarketMessages&quot;</span><span class="p">},</span>
 <span class="nt">&quot;Result&quot;</span><span class="p">:[{</span><span class="nt">&quot;ServerTime&quot;</span><span class="p">:</span><span class="mi">1536314399</span><span class="p">,</span><span class="nt">&quot;SessionID&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&quot;MarketType&quot;</span><span class="p">:</span><span class="s2">&quot;Normal Market Close&quot;</span><span class="p">,</span><span class="nt">&quot;MessageType</span>
@@ -418,8 +432,9 @@ bled&quot;:true,&quot;MaxTicks&quot;:2},
 <div class="section" id="def-get-exchange-message-self-exchange">
 <h3><strong>def get_exchange_message(self, exchange)</strong><a class="headerlink" href="#def-get-exchange-message-self-exchange" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to get the exchange message for the given exchange.</p>
-<p>On successful execution <strong>on_message_exchange_message(e_m)</strong> callback is fired.</p>
-<p><strong>e_m</strong> : The exchange message.</p>
+<p>On successful execution <strong>on_message_exchange_message(base_client,e_m)</strong> callback is fired.</p>
+<p><strong>e_m</strong> : The exchange message.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="nt">&quot;Request&quot;</span><span class="p">:{</span>
@@ -438,8 +453,9 @@ bled&quot;:true,&quot;MaxTicks&quot;:2},
 <div class="section" id="def-subscribe-realtime-self-exchange-instrument-identifier-unsubscribe-false">
 <h3><strong>def subscribe_realtime(self, exchange, instrument_identifier, unsubscribe=False)</strong><a class="headerlink" href="#def-subscribe-realtime-self-exchange-instrument-identifier-unsubscribe-false" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to subscribe to real time data for the given exchange and given instrument.</p>
-<p>On successful execution <strong>on_message_realtime_data(r_r)</strong> callback is fired.</p>
-<p><strong>r_r</strong> : The real time data.</p>
+<p>On successful execution <strong>on_message_realtime_data(base_client,r_r)</strong> callback is fired.</p>
+<p><strong>r_r</strong> : The real time data.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;Exchange&quot;:&quot;NSE&quot;,&quot;InstrumentIdentifier&quot;:&quot;SBIN&quot;,&quot;LastTradeTime&quot;:1536558991,&quot;Serv
 erTime&quot;:1536558991,&quot;AverageTradedPrice&quot;:291.31,&quot;BuyPrice&quot;:290.15,&quot;BuyQty&quot;:5441,&quot;
@@ -455,8 +471,9 @@ Close&quot;:291.65,&quot;High&quot;:293.25,&quot;Low&quot;:289.15,&quot;LastTrad
 <div class="section" id="subscribe-realtime-snapshot-self-exchange-instrument-identifier-periodicity-unsubscribe-false">
 <h3><strong>subscribe_realtime_snapshot(self, exchange, instrument_identifier, periodicity, unsubscribe=False)</strong><a class="headerlink" href="#subscribe-realtime-snapshot-self-exchange-instrument-identifier-periodicity-unsubscribe-false" title="Permalink to this headline">¶</a></h3>
 <p>Call this method to subscribe to real time snapshot data for the given exchange, given instrument and given periodicity.</p>
-<p>On successful execution <strong>on_message_realtime_snapshot_data(r_r)</strong> callback is fired.</p>
-<p><strong>r_r</strong> : The real time snapshot data.</p>
+<p>On successful execution <strong>on_message_realtime_snapshot_data(base_client,r_r)</strong> callback is fired.</p>
+<p><strong>r_r</strong> : The real time snapshot data.
+<strong>base_client</strong> : is the currently initialised WebSocket object.</p>
 <p><strong>Sample Response:</strong></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{&quot;Exchange&quot;:&quot;NSE&quot;,&quot;InstrumentIdentifier&quot;:&quot;SBIN&quot;,&quot;Periodicity&quot;:&quot;MINUTE&quot;,&quot;LastTrad
 eTime&quot;:1536559380,&quot;TradedQty&quot;:58767,&quot;OpenInterest&quot;:0,&quot;Open&quot;:290.4,&quot;High&quot;:290.4,&quot;
@@ -553,7 +570,7 @@ will be fired.</p>
                                <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span> <span class="mi">10</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_get_exchanges</span><span class="p">(</span><span class="n">list_exchanages</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_get_exchanges</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">list_exchanages</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LIST OF EXCHANGES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="n">response</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">list_exchanages</span><span class="p">))</span>
    <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
@@ -561,91 +578,91 @@ will be fired.</p>
    <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;Result&#39;</span><span class="p">])</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_instruments_on_search</span><span class="p">(</span><span class="n">list_instruments</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_instruments_on_search</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">list_instruments</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LIST OF INSTRUMENTS*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">list_instruments</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_instruments</span><span class="p">(</span><span class="n">list_instruments</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_instruments</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">list_instruments</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LIST OF INSTRUMENTS*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">list_instruments</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_last_quote</span><span class="p">(</span><span class="n">last_quote</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_last_quote</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">last_quote</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LAST QUOTE*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">last_quote</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_last_quote_array</span><span class="p">(</span><span class="n">last_quote_array</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_last_quote_array</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">last_quote_array</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********LAST QUOTE ARRAY*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">last_quote_array</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_snapshot_data</span><span class="p">(</span><span class="n">snapshot_data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_snapshot_data</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">snapshot_data</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********SNAPSHOT DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">snapshot_data</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_instrument_types</span><span class="p">(</span><span class="n">instrument_types</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_instrument_types</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">instrument_types</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********INSTRUMENT TYPES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">instrument_types</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_products</span><span class="p">(</span><span class="n">products</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_products</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">products</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********PRODUCTS*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">products</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_expiry_dates</span><span class="p">(</span><span class="n">expiry_dates</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_expiry_dates</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">expiry_dates</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********EXPIRY DATES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">expiry_dates</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_option_types</span><span class="p">(</span><span class="n">option_types</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_option_types</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">option_types</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********OPTION TYPES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">option_types</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_strike_prices</span><span class="p">(</span><span class="n">strike_prices</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_strike_prices</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">strike_prices</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********STRIKE PRICES*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">strike_prices</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_account_limitations</span><span class="p">(</span><span class="n">account_limitations</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_account_limitations</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">account_limitations</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********ACCOUNT LIMITATIONS*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">account_limitations</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_market_message</span><span class="p">(</span><span class="n">market_message</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_market_message</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">market_message</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********MARKET MESSAGE*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">market_message</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_exchange_message</span><span class="p">(</span><span class="n">exchange_message</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_exchange_message</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">exchange_message</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********EXCHANGE MESSAGE*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">exchange_message</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_realtime_data</span><span class="p">(</span><span class="n">realtime_data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_realtime_data</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">realtime_data</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********REALTIME DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">realtime_data</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_realtime_snapshot_data</span><span class="p">(</span><span class="n">realtime_snapshot_data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_realtime_snapshot_data</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">realtime_snapshot_data</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********REALTIME SNAPSHOT DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">realtime_snapshot_data</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_historical_tick_data</span><span class="p">(</span><span class="n">historical_tick_data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_historical_tick_data</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">historical_tick_data</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********HISTORICAL TICK DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">historical_tick_data</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">on_message_historical_ohlc_data</span><span class="p">(</span><span class="n">historical_ohlc_data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_message_historical_ohlc_data</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">historical_ohlc_data</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">*********HISTORICAL OHLC DATA*************</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
    <span class="k">print</span><span class="p">(</span><span class="n">historical_ohlc_data</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">on_reconnect</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">on_reconnect</span><span class="p">(</span><span class="n">base_client</span><span class="p">,</span><span class="n">count</span><span class="p">):</span>
    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">+++++++Reconnected+++++++++</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">on_reconnection_max_tries</span><span class="p">():</span>
@@ -826,7 +843,7 @@ Or you can raise an issue <a class="reference external" href="https://github.com
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">DhelmGfeedClient 1.0.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -88,8 +88,9 @@ On successful execution **on_message_get_exchanges(list_exchanges)** callback is
 
 Call this method to get the list of instruments using search key word.
 
-On successful execution **on_message_instruments_on_search(list_instruments)** callback is fired.
+On successful execution **on_message_instruments_on_search(base_client,list_instruments)** callback is fired.
 **list_instruments** : The list of instruments matching the search word.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -114,9 +115,10 @@ On successful execution **on_message_instruments_on_search(list_instruments)** c
 
 Call this method to get the list of instruments from an exchange.
 
-On successful execution **on_message_instruments(list_instruments)** callback is fired.
+On successful execution **on_message_instruments(base_client,list_instruments)** callback is fired.
 
 **list_instruments** : The list of instruments.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -142,9 +144,10 @@ On successful execution **on_message_instruments(list_instruments)** callback is
 
 Call this method to get the last quote of an instrument.
 
-On successful execution **on_message_last_quote(l_quote)** callback is fired.
+On successful execution **on_message_last_quote(base_client,l_quote)** callback is fired.
 
 **l_quote** : The last quote of the given instrument.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -178,9 +181,10 @@ On successful execution **on_message_last_quote(l_quote)** callback is fired.
 
 Call this method to get the last quotes of given instruments.
 
-On successful execution **on_message_last_quote_array(l_quote_array)** callback is fired.
+On successful execution **on_message_last_quote_array(base_client,l_quote_array)** callback is fired.
 
 **l_quote_array** : The last quotes of the given instruments.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -217,9 +221,10 @@ On successful execution **on_message_last_quote_array(l_quote_array)** callback 
 
 Call this method to get the snapshot quotes of given instruments.
 
-On successful execution **on_message_snapshot_data(s_data)** callback is fired.
+On successful execution **on_message_snapshot_data(base_client,s_data)** callback is fired.
 
 **l_data** : The snapshot quotes of the given instruments.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -247,9 +252,10 @@ On successful execution **on_message_snapshot_data(s_data)** callback is fired.
 
 Call this method to get historical tick data of the given instruments.
 
-On successful execution **on_message_historical_tick_data(h_t_d)** callback is fired.
+On successful execution **on_message_historical_tick_data(base_client,h_t_d)** callback is fired.
 
 **h_t_d** : The historical tick data  of the given instrument.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -277,9 +283,10 @@ On successful execution **on_message_historical_tick_data(h_t_d)** callback is f
 
 Call this method to get historical ohlc data of the given instruments.
 
-On successful execution **on_message_historical_ohlc_data(h_ohlc_d)** callback is fired.
+On successful execution **on_message_historical_ohlc_data(base_client,h_ohlc_d)** callback is fired.
 
 **h_ohlc_d** : The historical tick data  of the given instrument.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -308,9 +315,10 @@ On successful execution **on_message_historical_ohlc_data(h_ohlc_d)** callback i
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Call this method to get the list of instrument types available for an exchange.
 
-On successful execution **on_message_instrument_types(i_types)** callback is fired.
+On successful execution **on_message_instrument_types(base_client,i_types)** callback is fired.
 
 **i_types** : The list of instrument types.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -329,9 +337,10 @@ On successful execution **on_message_instrument_types(i_types)** callback is fir
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Call this method to get the list of products available for an exchange.
 
-On successful execution **on_message_product(p)** callback is fired.
+On successful execution **on_message_product(base_client,p)** callback is fired.
 
 **p** : The list of products.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -350,9 +359,10 @@ On successful execution **on_message_product(p)** callback is fired.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Call this method to get the list of expiry dates of different contracts for an exchange.
 
-On successful execution **on_message_expiry_dates(e_dates)** callback is fired.
+On successful execution **on_message_expiry_dates(base_client,e_dates)** callback is fired.
 
 **e_dates** : The list of expiry dates.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -367,9 +377,10 @@ On successful execution **on_message_expiry_dates(e_dates)** callback is fired.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Call this method to get the list of option types available for different contracts for an exchange.
 
-On successful execution **on_message_option_types(o_types)** callback is fired.
+On successful execution **on_message_option_types(base_client,o_types)** callback is fired.
 
 **o_types** : The list of option types.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -383,9 +394,10 @@ On successful execution **on_message_option_types(o_types)** callback is fired.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Call this method to get the list of strike prices for different contracts for an exchange.
 
-On successful execution **on_message_strike_prices(s_prices)** callback is fired.
+On successful execution **on_message_strike_prices(base_client,s_prices)** callback is fired.
 
 **s_prices** : The list of strike prices.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -403,9 +415,10 @@ On successful execution **on_message_strike_prices(s_prices)** callback is fired
 
 Call this method to get your account details and limitations.
 
-On successful execution **on_message_account_limitations(a_limit)** callback is fired.
+On successful execution **on_message_account_limitations(base_client,a_limit)** callback is fired.
 
 **a_limit** : Account details and limitations.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -442,9 +455,10 @@ On successful execution **on_message_account_limitations(a_limit)** callback is 
 
 Call this method to get the market message for the given exchange.
 
-On successful execution **on_message_market_message(m_m)** callback is fired.
+On successful execution **on_message_market_message(base_client,m_m)** callback is fired.
 
 **m_m** : The market message.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -460,9 +474,10 @@ On successful execution **on_message_market_message(m_m)** callback is fired.
 
 Call this method to get the exchange message for the given exchange.
 
-On successful execution **on_message_exchange_message(e_m)** callback is fired.
+On successful execution **on_message_exchange_message(base_client,e_m)** callback is fired.
 
 **e_m** : The exchange message.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -485,9 +500,10 @@ On successful execution **on_message_exchange_message(e_m)** callback is fired.
 
 Call this method to subscribe to real time data for the given exchange and given instrument.
 
-On successful execution **on_message_realtime_data(r_r)** callback is fired.
+On successful execution **on_message_realtime_data(base_client,r_r)** callback is fired.
 
 **r_r** : The real time data.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -507,9 +523,10 @@ On successful execution **on_message_realtime_data(r_r)** callback is fired.
 
 Call this method to subscribe to real time snapshot data for the given exchange, given instrument and given periodicity.
 
-On successful execution **on_message_realtime_snapshot_data(r_r)** callback is fired.
+On successful execution **on_message_realtime_snapshot_data(base_client,r_r)** callback is fired.
 
 **r_r** : The real time snapshot data.
+**base_client** : is the currently initialised WebSocket object.
 
 **Sample Response:**
 
@@ -613,7 +630,7 @@ Example usage
                                 int(time.mktime((datetime.datetime.now()).timetuple())), 10)
 
 
- def on_message_get_exchanges(list_exchanages):
+ def on_message_get_exchanges(base_client,list_exchanages):
     print("\n*********LIST OF EXCHANGES*************\n")
     response = (json.loads(list_exchanages))
     print(response)
@@ -621,91 +638,91 @@ Example usage
     print(response['Result'])
 
 
- def on_message_instruments_on_search(list_instruments):
+ def on_message_instruments_on_search(base_client,list_instruments):
     print("\n*********LIST OF INSTRUMENTS*************\n")
     print(list_instruments)
 
 
- def on_message_instruments(list_instruments):
+ def on_message_instruments(base_client,list_instruments):
     print("\n*********LIST OF INSTRUMENTS*************\n")
     print(list_instruments)
 
 
- def on_message_last_quote(last_quote):
+ def on_message_last_quote(base_client,last_quote):
     print("\n*********LAST QUOTE*************\n")
     print(last_quote)
 
 
- def on_message_last_quote_array(last_quote_array):
+ def on_message_last_quote_array(base_client,last_quote_array):
     print("\n*********LAST QUOTE ARRAY*************\n")
     print(last_quote_array)
 
 
- def on_message_snapshot_data(snapshot_data):
+ def on_message_snapshot_data(base_client,snapshot_data):
     print("\n*********SNAPSHOT DATA*************\n")
     print(snapshot_data)
 
 
- def on_message_instrument_types(instrument_types):
+ def on_message_instrument_types(base_client,instrument_types):
     print("\n*********INSTRUMENT TYPES*************\n")
     print(instrument_types)
 
 
- def on_message_products(products):
+ def on_message_products(base_client,products):
     print("\n*********PRODUCTS*************\n")
     print(products)
 
 
- def on_message_expiry_dates(expiry_dates):
+ def on_message_expiry_dates(base_client,expiry_dates):
     print("\n*********EXPIRY DATES*************\n")
     print(expiry_dates)
 
 
- def on_message_option_types(option_types):
+ def on_message_option_types(base_client,option_types):
     print("\n*********OPTION TYPES*************\n")
     print(option_types)
 
 
- def on_message_strike_prices(strike_prices):
+ def on_message_strike_prices(base_client,strike_prices):
     print("\n*********STRIKE PRICES*************\n")
     print(strike_prices)
 
 
- def on_message_account_limitations(account_limitations):
+ def on_message_account_limitations(base_client,account_limitations):
     print("\n*********ACCOUNT LIMITATIONS*************\n")
     print(account_limitations)
 
 
- def on_message_market_message(market_message):
+ def on_message_market_message(base_client,market_message):
     print("\n*********MARKET MESSAGE*************\n")
     print(market_message)
 
 
- def on_message_exchange_message(exchange_message):
+ def on_message_exchange_message(base_client,exchange_message):
     print("\n*********EXCHANGE MESSAGE*************\n")
     print(exchange_message)
 
 
- def on_message_realtime_data(realtime_data):
+ def on_message_realtime_data(base_client,realtime_data):
     print("\n*********REALTIME DATA*************\n")
     print(realtime_data)
 
 
- def on_message_realtime_snapshot_data(realtime_snapshot_data):
+ def on_message_realtime_snapshot_data(base_client,realtime_snapshot_data):
     print("\n*********REALTIME SNAPSHOT DATA*************\n")
     print(realtime_snapshot_data)
 
 
- def on_message_historical_tick_data(historical_tick_data):
+ def on_message_historical_tick_data(base_client,historical_tick_data):
     print("\n*********HISTORICAL TICK DATA*************\n")
     print(historical_tick_data)
 
 
- def on_message_historical_ohlc_data(historical_ohlc_data):
+ def on_message_historical_ohlc_data(base_client,historical_ohlc_data):
     print("\n*********HISTORICAL OHLC DATA*************\n")
     print(historical_ohlc_data)
 
- def on_reconnect(count):
+ def on_reconnect(base_client,count):
     print("\n+++++++Reconnected+++++++++\n")
     
  def on_reconnection_max_tries():

@@ -2,9 +2,9 @@
 """
     **gfeedclient.py**
 
-    - Copyright (c) 2018, KNC Solutions Private Limited.
+    - Copyright (c) 2019, KNC Solutions Private Limited.
     - License: 'Apache License, Version 2.0'.
-    - version: 1.0.1
+    - version: 1.0.3
 """
 from twisted.python import log
 from autobahn.twisted.websocket import WebSocketClientProtocol
@@ -239,7 +239,7 @@ class GfeedClient(object):
         if not reactor.running:
             reactor.run()
 
-    def disconnect(self):
+    def disconnect(self, code=None, reason=None):
         """
         Call this method to disconnect the client.
 
@@ -689,75 +689,75 @@ class GfeedClient(object):
 
     def _on_message_get_exchanges(self, list_exchanges):
         if self.on_message_get_exchanges:
-            self.on_message_get_exchanges(list_exchanges)
+            self.on_message_get_exchanges(self,list_exchanges)
 
     def _on_message_instruments_on_search(self, list_instruments):
         if self.on_message_instruments_on_search:
-            self.on_message_instruments_on_search(list_instruments)
+            self.on_message_instruments_on_search(self,list_instruments)
 
     def _on_message_instruments(self, list_instruments):
         if self.on_message_instruments:
-            self.on_message_instruments(list_instruments)
+            self.on_message_instruments(self,list_instruments)
 
     def _on_message_last_quote(self, l_quote):
         if self.on_message_last_quote:
-            self.on_message_last_quote(l_quote)
+            self.on_message_last_quote(self,l_quote)
 
     def _on_message_last_quote_array(self, l_quote_array):
         if self.on_message_last_quote_array:
-            self.on_message_last_quote_array(l_quote_array)
+            self.on_message_last_quote_array(self,l_quote_array)
 
     def _on_message_snapshot_data(self, s_data):
         if self.on_message_snapshot_data:
-            self.on_message_snapshot_data(s_data)
+            self.on_message_snapshot_data(self,s_data)
 
     def _on_message_historical_tick_data(self, h_t_d):
         if self.on_message_historical_tick_data:
-            self.on_message_historical_tick_data(h_t_d)
+            self.on_message_historical_tick_data(self,h_t_d)
 
     def _on_message_historical_ohlc_data(self, h_ohlc_d):
         if self.on_message_historical_ohlc_data:
-            self.on_message_historical_ohlc_data(h_ohlc_d)
+            self.on_message_historical_ohlc_data(self,h_ohlc_d)
 
     def _on_message_instrument_types(self,i_types):
         if self.on_message_instrument_types:
-            self.on_message_instrument_types(i_types)
+            self.on_message_instrument_types(self,i_types)
 
     def _on_message_product(self, p):
         if self.on_message_product:
-            self.on_message_product(p)
+            self.on_message_product(self,p)
 
     def _on_message_expiry_dates(self, e_dates):
         if self.on_message_expiry_dates:
-            self.on_message_expiry_dates(e_dates)
+            self.on_message_expiry_dates(self,e_dates)
 
     def _on_message_option_types(self, o_types):
         if self.on_message_option_types:
-            self.on_message_option_types(o_types)
+            self.on_message_option_types(self,o_types)
 
     def _on_message_strike_prices(self, s_prices):
         if self.on_message_strike_prices:
-            self.on_message_strike_prices(s_prices)
+            self.on_message_strike_prices(self,s_prices)
 
     def _on_message_account_limitations(self, a_limit):
         if self.on_message_account_limitations:
-            self.on_message_account_limitations(a_limit)
+            self.on_message_account_limitations(self,a_limit)
 
     def _on_message_market_message(self, m_m):
         if self.on_message_market_message:
-            self.on_message_market_message(m_m)
+            self.on_message_market_message(self,m_m)
 
     def _on_message_exchange_message(self, e_m):
         if self.on_message_exchange_message:
-            self.on_message_exchange_message(e_m)
+            self.on_message_exchange_message(self,e_m)
 
     def _on_message_realtime_data(self, r_r):
         if self.on_message_realtime_data:
-            self.on_message_realtime_data(r_r)
+            self.on_message_realtime_data(self,r_r)
 
     def _on_message_realtime_snapshot_data(self, r_r):
         if self.on_message_realtime_snapshot_data:
-            self.on_message_realtime_snapshot_data(r_r)
+            self.on_message_realtime_snapshot_data(self,r_r)
 
 
     def _on_message(self,base_client, payload, isBinary):
