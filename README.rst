@@ -74,5 +74,5 @@ Open the terminal and type:
 
 Replace <ws_url> with the web socket url and <api_key> with your api key.
 
-If you have any query raise an `issue <https://github.com/kncsolutions/dhelm-gfeed-python-client/issues>`_ or email at developer@kncsolutions.in.
+If you have any query raise an `issue <https://github.com/kncsolutions/dhelm-gfeed-python-client/issues>`_ 
 To know about dhelm project visit our project website at https://dhelm.kncsolutions.in
