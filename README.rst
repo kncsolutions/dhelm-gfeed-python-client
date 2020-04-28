@@ -1,4 +1,4 @@
-No more support will be provided on this package from MAY 01, 2020.
+No more support will be provided on this package from MAY 01, 2020.<br/>
 Dhelm Gfeed Python Client Package
 ==================================
 
